@@ -37,7 +37,6 @@ Seller(admin) can:
 - send a message via app, email, or text back on negotiations in buying the said item 
   - ADD
 
-
 # Database Tables
 
 - Users  
@@ -55,12 +54,12 @@ GET '/' - Display Featured listings
 
 GET '/filter=:id' 
 - Res.render(index.html)
-- LoadFilteredListings()
+- LoadFilteredListings(filterVariable)
 
 GET '/users/:id'
-- DisplayUserInfo();
-- DisplayMessages();
-- DisplayFavorites();
+- DisplayUserInfo(); //display urls tinyapp
+- DisplayMessages(); //display urls tinyapp
+- DisplayFavorites(); //display urls tinyapp
 
 GET '/admin/:id'
 
@@ -80,8 +79,6 @@ POST '/delete/:listingId'
 deleteListing();
 
 
-
-
 CREATE TABLE table (
   id SERIAL PRIMARY KEY
 )
@@ -96,12 +93,22 @@ CREATE TABLE table2 (
 ## TASKS
 
 Ryan
+- HEADER (litebay)
+- addListing(); //node postGRES
+- setListingSold(); //node postGRES
+- deleteListing(); //node postGRES
 
 Eric
+- HTML HOMEPAGE (TO BE STYLED)
+- DisplayUserInfo(); //display urls tinyapp
+- DisplayMessages(); //display urls tinyapp
+- DisplayFavorites(); //display urls tinyapp
 
 Sid
 
 - CREATE DB buysell_midterm_db
+- LoadFilteredListings(filterVariable) //node postGRES
+
 
 ## GIT NOTES
 
