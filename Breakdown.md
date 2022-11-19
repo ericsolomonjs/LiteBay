@@ -96,15 +96,16 @@ Sid
 
 ## GIT NOTES
 
-git checkout -b feature/INSERT BRANCH NAME
 git pull
+git checkout -b feature/INSERT BRANCH NAME
 
 # YOUR WORK
 
 git add SPECIFIC FILES/FOLDERS
 git commit -m "INSERT SHORT DESCRIPTION"
-git push
+git checkout master
 git pull
+git checkout feature/INSERT BRANCH NAME
 git merge master
 
 # MAKE SURE NOTHING IS BROKEN
