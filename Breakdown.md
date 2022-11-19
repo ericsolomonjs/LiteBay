@@ -8,7 +8,7 @@ Buy/Sell Listing Website
 
 - USER PAGE
 - Listings Page
-- Log in / Register page}
+- Log in / Register page
 - Create listing Page
 - Admin Page
 
@@ -39,7 +39,7 @@ Seller(admin) can:
 
 # Database Tables
 
-- Users  
+- Users
 
 - Messages
 
@@ -47,12 +47,9 @@ Seller(admin) can:
 
 # Routes
 
-- Header login
-
-
 GET '/' - Display Featured listings
 
-GET '/filter=:id' 
+GET '/filter=:filterVariable'
 - Res.render(index.html)
 - LoadFilteredListings(filterVariable)
 
@@ -78,18 +75,6 @@ POST '/delete/:listingId'
 
 deleteListing();
 
-
-CREATE TABLE table (
-  id SERIAL PRIMARY KEY
-)
-
-CREATE TABLE table2 (
-  foreign_id SERIAL FOREIGN KEY REFERENCING table.id;
-)
-
-
-
-
 ## TASKS
 
 Ryan
@@ -99,7 +84,7 @@ Ryan
 - deleteListing(); //node postGRES
 
 Eric
-- HTML HOMEPAGE (TO BE STYLED)
+- HTML HOMEPAGE (TO BE STYLED) // used existing, will amend as we go
 - DisplayUserInfo(); //display urls tinyapp
 - DisplayMessages(); //display urls tinyapp
 - DisplayFavorites(); //display urls tinyapp
@@ -109,11 +94,21 @@ Sid
 - CREATE DB buysell_midterm_db
 - LoadFilteredListings(filterVariable) //node postGRES
 
-
 ## GIT NOTES
 
-GIT PULL before GIT COMMIT
+git checkout -b feature/INSERT BRANCH NAME
+git pull
 
-To Merge
-Git PULL > GIT MERGE MASTER > 
-GIT PULL > GIT COMMIT > GIT PUSH
+# YOUR WORK
+
+git add SPECIFIC FILES/FOLDERS
+git commit -m "INSERT SHORT DESCRIPTION"
+git push
+git pull
+git merge master
+
+# MAKE SURE NOTHING IS BROKEN
+
+git checkout master
+git merge feature/INSERT BRANCH NAME
+git push
