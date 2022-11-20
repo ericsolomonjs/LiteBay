@@ -91,8 +91,9 @@ Eric
 
 Sid
 
-- CREATE DB buysell_midterm_db
-- LoadFilteredListings(filterVariable) //node postGRES
+- COMPLETED // CREATE DB buysell_midterm_db
+- COMPLETED // LoadFilteredListings(filterVariable) //node postGRES
+- COMPLETED // LoadFeaturedListings
 
 ## GIT NOTES
 
