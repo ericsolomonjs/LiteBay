@@ -8,17 +8,61 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <meta name="viewport" content="width=device-width, initial-scale=1.0" >
 
+  <!-- StyleSheets -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
 
+  <!-- Foreign scripts -->
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
+
+  <!-- OUR SCRIPTS -->
+
 </head>
 
 <body>
-  <h1>Have fun! 🥔</h1>
+
+  <title>Featured Listings!</title>
+  <!-- ADD FEATURED LISTINGS IN JS -->
+  <div class = "featured-listings-section">
+  <!-- LISTINGS -->
+  </div>
+  <title>Listings</title>
+  <!-- ADD NON-FEATURED LISTINGS IN JS, NO DUPLICATION -->
+  <div class="listings-section">
+    <!-- LISTINGS -->
+
+    <!-- ARTICLE IS TEMPORARY,WILL BE REPLACED IN JS CODE -->
+    <article class = listing-article>
+      <div>
+        <!-- BUTTON POSTS TO FAVORITES DB OR IF EXISTS, DELETES FROM -->
+        <button type = submit buttonmethod = "POST" buttonaction="/favorite/:post_id" >
+          FAVORITE
+        </button>
+      </div>
+      <div>
+        <!-- TARGET THE CLASS BELOW FOR LISTING TEXT! -->
+        <p class = listing-text>
+        This is the listing text that will be used as an example.
+        </p>
+        <!-- TARGET THE CLASS BELOW FOR LISTING IMAGE! -->
+        <img class="listing-img" src="https://cdn.shopify.com/s/files/1/0622/0660/7617/t/3/assets/1-1654814628780.jpg?v=1654814629" alt="Picture of a motorcycle">
+      </div>
+      <div>
+        <!-- TARGET THE CLASS BELOW FOR USER -->
+        <p class="posted-by">
+          Posted by : USER
+        </p>
+        <!-- TARGET THE CLASS BELOW WITH POSTED x [unit of time] AGO -->
+        <p class="posted-time">
+          Posted 7 days ago
+        </p>
+      </div>
+    </article>
+    <!-- END OF TEMP ARTICLE -->
+  </div>
 </body>
 
 </html>
