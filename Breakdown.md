@@ -14,103 +14,97 @@ Buy/Sell Listing Website
 
 # Features
 
-- users can see featured items on a main feed
+Users can:
+1. users can see featured items on a main feed
   - SELECT * FROM listings WHERE featured
-- users can filter items by price,
+2. users can filter items by price,
   - SELECT * FROM listings WHERE PRICE < 20 ORDER BY date_added;
-- users can favourite items to check up on them later
+3. users can favourite items to check up on them later
   ALTER TABLE (change featured)
-- users can send messages to the user that is listing the item
+4. users can send messages to the user that is listing the item
 
 - - Message about specific listing (TBA) 
 
 **** CLARIFY REQUIREMENTS FOR ADMIN****
 
-Seller(admin) can:
-
-- post items, which can be seen by others
+Admin(seller) can:
+1. post items, which can be seen by others
   - ADD 
-- remove items from the site
+2. remove items from the site
   - DELETE
-- mark items as SOLD!,
+3. mark items as SOLD!,
   - ALTER
-- send a message via app, email, or text back on negotiations in buying the said item 
+4. send a message via app, email, or text back on negotiations in buying the said item 
   - ADD
 
 # Database Tables
 
-- Users
-
-- Messages
-
-- Classifieds
+1. Users
+2. Images
+3. Listings
+4. Favourites
+5. Messages
 
 # Routes
 
-GET '/' - Display Featured listings
+1. GET '/' - Display Featured listings
 
-GET '/filter=:filterVariable'
-- Res.render(index.html)
-- LoadFilteredListings(filterVariable)
+2. GET '/filter=:filterVariable'
+  - Res.render(index.html)
+  - LoadFilteredListings(filterVariable)
 
-GET '/users/:id'
-- DisplayUserInfo(); //display urls tinyapp
-- DisplayMessages(); //display urls tinyapp
-- DisplayFavorites(); //display urls tinyapp
+3. GET '/users/:id'
+  - DisplayUserInfo(); //display urls tinyapp
+  - DisplayMessages(); //display urls tinyapp
+  - DisplayFavorites(); //display urls tinyapp
 
-GET '/admin/:id'
+4. GET '/admin/:id'
+  - Check if id is admin
+  - if not redirect to login
 
-- Check if id is admin
-- if not redirect to login
+5. POST '/'
+  - addListing();
 
-POST '/'
+6. POST '/setsold/'
+  - //placeholder
+  - setListingSold();
 
-addListing();
-
-POST '/setsold/'
-//placeholder
-setListingSold();
-
-POST '/delete/:listingId'
-
-deleteListing();
+7. POST '/delete/:listingId'
+  - deleteListing();
 
 ## TASKS
+C = COMPLETED
 
 Ryan
-- HEADER (litebay)
-- addListing(); //node postGRES
-- setListingSold(); //node postGRES
-- deleteListing(); //node postGRES
+1. C / HEADER (litebay)
+2. addListing(); //node postGRES
+3. setListingSold(); //node postGRES
+4. deleteListing(); //node postGRES
 
 Eric
-- HTML HOMEPAGE (TO BE STYLED) // used existing, will amend as we go
-- DisplayUserInfo(); //display urls tinyapp
-- DisplayMessages(); //display urls tinyapp
-- DisplayFavorites(); //display urls tinyapp
+1. HTML HOMEPAGE (TO BE STYLED) // used existing, will amend as we go
+2. DisplayUserInfo(); //display urls tinyapp
+3. DisplayMessages(); //display urls tinyapp
+4. DisplayFavorites(); //display urls tinyapp
 
 Sid
-
-- COMPLETED // CREATE DB buysell_midterm_db
-- COMPLETED // LoadFilteredListings(filterVariable) //node postGRES
-- COMPLETED // LoadFeaturedListings
+1. C / CREATE DB schema buysell_midterm_db
+2. C / LoadFilteredListings(filterVariable) //node postGRES
+3. C / LoadFeaturedListings
+4. C / LoadUserListings (all listings by a user)
+5. C / LoadListingID (gets info for specific listing)
 
 ## GIT NOTES
-
-git pull
-git checkout -b feature/INSERT BRANCH NAME
-
+1. *IMPORTANT* "git pull" BEFORE ANY WORK
+2. git checkout -b feature/INSERT BRANCH NAME
 # YOUR WORK
-
-git add SPECIFIC FILES/FOLDERS
-git commit -m "INSERT SHORT DESCRIPTION"
-git checkout master
-git pull
-git checkout feature/INSERT BRANCH NAME
-git merge master
-
+3. git add (SPECIFIC FILES/FOLDERS)
+4. git commit -m "(INSERT SHORT DESCRIPTION)"
+5. git checkout master
+6. git pull
+7. git checkout feature/(INSERT BRANCH NAME)
+8. git merge master
 # MAKE SURE NOTHING IS BROKEN
-
-git checkout master
-git merge feature/INSERT BRANCH NAME
-git push
+9. git checkout master
+10. git merge feature/(INSERT BRANCH NAME)
+11. git push
