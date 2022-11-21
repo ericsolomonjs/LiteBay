@@ -72,6 +72,8 @@ function displayMessages(messagesObject) {
 
 function getFavorites(username) {
   let favorites = null;
+  let query
+  let values
   pool.query(`SELECT listings_id FROM favorites JOIN users ON favorites.user_id=users.id WHERE username='${username}'`,(req, res) => {
     favorites = res.listings.id;
   })
@@ -80,5 +82,5 @@ function getFavorites(username) {
 
 
 function displayFavorites(favoritesObject){
-
+  
 }
