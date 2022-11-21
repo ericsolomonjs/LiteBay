@@ -1,10 +1,10 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  user: 'vagrant', // may need to change
-  password: '123',
+  user: 'labber',
+  password: 'labber',
   host: 'localhost',
-  database: 'test_db' // change to project db name
+  database: 'midterm'
 });
 
 const queryString = `
@@ -25,7 +25,18 @@ pool.query(queryString)
       featured: listing.featured,
       sold: listing.sold,
       dateAdded: listing.date_added
-    }); // think it should be a return. figure out how to return all listing content in a single variable, not [object Object]
+    });
+
+    // return {
+    //   listingID: listing.id,
+    //   imageID: listing.image_id,
+    //   listingText: listing.text,
+    //   listingPrice: listing.price,
+    //   userID: listing.user_id,
+    //   featured: listing.featured,
+    //   sold: listing.sold,
+    //   dateAdded: listing.date_added
+    // }; // maybe figure out how to return all listing content in a single variable, not [object Object]
   })
 }).catch(err => console.error('query error', err.stack));
 
