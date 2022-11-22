@@ -1,10 +1,10 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  user: 'vagrant', // may need to change
-  password: '123',
+  user: 'labber', // may need to change
+  password: 'labber',
   host: 'localhost',
-  database: 'test_db' // change to project db name
+  database: 'midterm' // change to project db name
 });
 
 const queryString = `
