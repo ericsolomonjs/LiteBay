@@ -12,15 +12,18 @@ const pool = new Pool({
 //- DisplayFavorites(); //display urls tinyapp
 
 function getUserInfo(username) {
-  let {email,full_name, id, is_Admin} = '';
-  pool.query(`SELECT username,email,full_name, id, is_admin FROM users WHERE username='${username}'`, (err, res) => {
+  const query = `SELECT * FROM users WHERE username='$1'`;
+  let {email,full_name, id, is_Admin, password} = '';
+  pool.query(query, username, (err, res) => {
     if (err) {console.log(err);}
     id = res.id;
     is_Admin = res.is_Admin;
     email = res.email;
     full_name = res.full_name;
+    username = res.username;
+    password = res.password;
   })
-  return {id, is_Admin, email, full_name};
+  return {id, is_Admin, email, full_name, password};
 }
 
 function getUserListings(username) {
@@ -36,7 +39,7 @@ function getUserListings(username) {
     return;
     }
 
-    listingsArray = res; //check if possible to use array for id's
+    listingsArray = res.rows; //check if possible to use array for id's
   })  
   return listings;
 }
@@ -44,21 +47,24 @@ function getUserListings(username) {
 function getUserInfo (username){
   const query = `SELECT * FROM users WHERE username = $1`;
   const values = [username];
-  let data;
+  let data = null;
 
   pool.query(query, values)
   .then ((res, error) => {
     if (error) {console.log("ERROR: ", error);}
     data = res;
     console.log(res);
-
-
   })
+  //return queried data
+  return data;
 
 }
 
 function displayUserInfo(infoObject) {
-
+  //add user data to page HTML
+  $("div.user-info-section").prepend(`
+  ${data.username},
+  ${data.email}`)
 }
 
 function getFavorites(username) {
@@ -72,7 +78,7 @@ function getFavorites(username) {
   return favorites;
 }
 
-function displayListings(favoritesObject){
+function displayListings(object){
   
 }
 
