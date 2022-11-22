@@ -1,7 +1,7 @@
 {
-  "name": "node-skeleton",
+  "name": "light-bay",
   "version": "1.0.0",
-  "description": "",
+  "description": "simple buy/sell marketplace similar to eBay",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,9 +9,12 @@
     "local": "./node_modules/.bin/nodemon -L --ignore public/",
     "db:reset": "node bin/resetdb.js"
   },
-  "author": "Lighthouse Labs",
+  "author": "Ryan Zhen, Sid Natarajan, Eric Solomon",
   "license": "ISC",
+  "homepage": "https://github.com/facelessagony/Mid-Term/blob/master/README.md",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-session": "^2.0.0",
     "chalk": "^2.4.2",
     "dotenv": "^2.0.0",
     "ejs": "^2.6.2",
