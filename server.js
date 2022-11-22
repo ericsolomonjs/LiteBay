@@ -65,24 +65,24 @@ app.get('/', (req, res) => {
 
 
 
-
+//update all routes below
 
 // renders login page
 app.get("/login", (req, res) => {
-  const loggedIn = getUserByUserId(req.session.user_id, users);
+  const loggedIn = getUserByUserId(req.session.user_id, users); // UPDATE WITH CORRECT HELPER FX
 
   // if logged in, redirect to "my urls"
   if (loggedIn) {
-    return res.redirect("/urls");
+    return res.redirect("/urls"); // UPDATE WITH CORRECT ROUTE
   }
-  return res.render("urls_login");
+  return res.render("login_register");
 });
 
 // user enters information and logs in
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  const authorizedUser = getUserByEmail(users, email);
+  const authorizedUser = getUserByEmail(users, email); // UPDATE WITH CORRECT HELPER FX
 
   if (!authorizedUser) {
     return res.status(403).send("<p>User with that e-mail cannot be found.</p>");
@@ -93,7 +93,7 @@ app.post("/login", (req, res) => {
     return res.status(403).send("<p>Password does not match.</p>");
   } else {
     req.session.user_id = authorizedUser.id;
-    return res.redirect("/urls");
+    return res.redirect("/urls"); // UPDATE WITH CORRECT ROUTE
   }
 });
 
@@ -103,10 +103,11 @@ app.post("/logout", (req, res) => {
   return res.redirect("/login");
 });
 
+
 // renders user registration page
 app.get("/register", (req, res) => {
   const userID = req.session.user_id;
-  const loggedIn = getUserByUserId(userID, users);
+  const loggedIn = getUserByUserId(userID, users); // UPDATE WITH CORRECT HELPER FX
 
   if (loggedIn) {
     return res.redirect("/urls");
@@ -117,20 +118,21 @@ app.get("/register", (req, res) => {
 
 // user submits data for registration, account is created
 app.post("/register", (req, res) => {
+  const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
 
   // if either text field is empty, return error message
-  if (!email || !password) {
-    return res.status(400).send("<p>Email or Password field was left blank.</p>");
+  if (!username || !email || !password) {
+    return res.status(400).send("<p>A text field was left blank.</p>");
   }
 
   // if email exists in database, return error message
-  if (getUserByEmail(users, email)) {
+  if (getUserByEmail(users, email)) {  // UPDATE WITH CORRECT HELPER FX
     return res.status(400).send("<p>Email is already in use.</p>");
   }
 
-  const newUserId = generateRandomString();
+  const newUserId = generateRandomString(); // UPDATE WITH CORRECT HELPER FX
   users[newUserId] = {
     id:  newUserId,
     email,
