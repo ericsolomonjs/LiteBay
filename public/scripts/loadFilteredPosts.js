@@ -19,7 +19,7 @@ const values = [`${filterPrice}`];
 pool.query(queryString, values)
   .then(res => {
     res.rows.forEach(listing => {
-      console.log({
+      return {
         listingID: listing.id,
         imageID: listing.image_id,
         listingText: listing.text,
@@ -28,20 +28,7 @@ pool.query(queryString, values)
         featured: listing.featured,
         sold: listing.sold,
         dateAdded: listing.date_added
-      });
-
-      // return {
-      //   listingID: listing.id,
-      //   imageID: listing.image_id,
-      //   listingText: listing.text,
-      //   listingPrice: listing.price,
-      //   userID: listing.user_id,
-      //   featured: listing.featured,
-      //   sold: listing.sold,
-      //   dateAdded: listing.date_added
-      // };
-
-      // maybe figure out how to return all listing content in a single variable, not [object Object]
+      };
     });
   }).catch(err => console.error('query error', err.stack));
 
