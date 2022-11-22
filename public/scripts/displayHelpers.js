@@ -1,10 +1,10 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  user: 'vagrant', // may need to change
-  password: '123',
+  user: 'labber', // may need to change
+  password: 'labber',
   host: 'localhost',
-  database: 'test_db' // change to project db name
+  database: 'midterm' // change to project db name
 });
 
 //- DisplayUserInfo(); //display urls tinyapp
@@ -13,17 +13,12 @@ const pool = new Pool({
 
 function getUserInfo(username) {
   const query = `SELECT * FROM users WHERE username='$1'`;
-  let {email,full_name, id, is_Admin, password} = '';
+  let data;
   pool.query(query, username, (err, res) => {
     if (err) {console.log(err);}
-    id = res.id;
-    is_Admin = res.is_Admin;
-    email = res.email;
-    full_name = res.full_name;
-    username = res.username;
-    password = res.password;
+    data = res.rows
   })
-  return {id, is_Admin, email, full_name, password};
+  return data;
 }
 
 function getUserListings(username) {
@@ -38,7 +33,6 @@ function getUserListings(username) {
     console.log(err);
     return;
     }
-
     listingsArray = res.rows; //check if possible to use array for id's
   })  
   return listings;
@@ -48,10 +42,9 @@ function getUserInfo (username){
   const query = `SELECT * FROM users WHERE username = $1`;
   const values = [username];
   let data = null;
-
   pool.query(query, values)
-  .then ((res, error) => {
-    if (error) {console.log("ERROR: ", error);}
+  .then ((err,res) => {
+    if (err) {console.log("ERROR: ", err);}
     data = res;
     console.log(res);
   })
@@ -69,17 +62,21 @@ function displayUserInfo(infoObject) {
 
 function getFavorites(username) {
   let favorites = null;
-  const query =`SELECT listings_id FROM favorites JOIN users ON favorites.user_id=users.id WHERE username='$1'`
+  const query =`SELECT * FROM favorites 
+  JOIN users ON favorites.user_id=users.id 
+  JOIN listings ON listings.id = listings_id
+  WHERE username='$1'`
   let values = [username];
   pool.query(query,values)
   then((req, res) => {
-    favorites = res.listings.id;
+    //has to return object of listings that are user favorites so currently wrong
+    favorites = res.rows;
   })
   return favorites;
 }
 
 function displayListings(object){
-  
+  const htmlString = `object.`
 }
 
 //commented out messages for now
