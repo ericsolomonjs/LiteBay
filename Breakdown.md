@@ -83,9 +83,11 @@ Ryan
 
 Eric
 1. HTML HOMEPAGE (TO BE STYLED) // used existing, will amend as we go
-2. DisplayUserInfo(); //display urls tinyapp
-3. DisplayMessages(); //display urls tinyapp
-4. DisplayFavorites(); //display urls tinyapp
+2. GetUserInfo()
+3. DisplayUserInfo(); //display urls tinyapp
+4. GetMessages(username);
+5. DisplayMessages(); //display urls tinyapp
+6. GetFavorites()
 
 Sid
 1. C / CREATE DB schema buysell_midterm_db
@@ -93,6 +95,8 @@ Sid
 3. C / LoadFeaturedListings
 4. C / LoadUserListings (all listings by a user)
 5. C / LoadListingID (gets info for specific listing)
+
+6. DisplayListings(listingsObject {id: value}); //re use everywhere
 
 ## GIT NOTES
 1. *IMPORTANT* "git pull" BEFORE ANY WORK
