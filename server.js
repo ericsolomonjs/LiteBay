@@ -1,11 +1,24 @@
 // load .env data into process.env
 require('dotenv').config();
+
+// UPDATE WHEN RYAN ORGANIZES HELPERS
 const {
-  getUserInfo,
-  getUserListings,
+  addUser,
   getUserInfo,
   displayUserInfo,
-  getFavorites} = require("bin/helpers/displayHelpers.js")
+  getFavorites
+} = require("bin/helpers/userHelpers.js");
+const {
+  addListing,
+  deleteListing,
+  getListings,
+  displayListings,
+  loadFeaturedListings,
+  loadFilteredPosts,
+  loadListingID,
+  loadUsersListings,
+  setListingSold
+} = require("bin/helpers/listingHelpers.js");
 
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
@@ -22,13 +35,6 @@ const pool = new Pool({
   database: 'midterm'
 });
 
-// UPDATE WITH CORRECT FUNCTIONS import helper fx from single file
-// const {
-//   generateRandomString,
-//   getUserByEmail,
-//   getUserByUserId,
-//   urlsForUser
-// } = require("./helpers");
 const bcrypt = require("bcryptjs");
 
 const PORT = process.env.PORT || 8080;
@@ -78,26 +84,31 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}`);
+});
 
 
-//update all routes below
+
 
 // renders login page
 app.get("/login", (req, res) => {
   const loggedIn = getUserByUserId(req.session.user_id, users); // UPDATE WITH CORRECT HELPER FX
 
-  // if logged in, redirect to "my urls"
+  // if logged in, redirect to "home"
   if (loggedIn) {
-    return res.redirect("/urls"); // UPDATE WITH CORRECT ROUTE
+    return res.redirect("/");
   }
   return res.render("login_register");
 });
+
+
 
 // user enters information and logs in
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  const authorizedUser = getUserByEmail(users, email); // UPDATE WITH CORRECT HELPER FX
+  const authorizedUser = getUserByEmail(email); // UPDATE WITH CORRECT HELPER FX
 
   if (!authorizedUser) {
     return res.status(403).send("<p>User with that e-mail cannot be found.</p>");
@@ -112,11 +123,18 @@ app.post("/login", (req, res) => {
   }
 });
 
+
+
+
+
 // logs user out, clears session cookies, redirect to login page
 app.post("/logout", (req, res) => {
   req.session = undefined;
   return res.redirect("/login");
 });
+
+
+
 
 
 // renders user registration page
@@ -130,6 +148,10 @@ app.get("/register", (req, res) => {
 
   return res.render("urls_register");
 });
+
+
+
+
 
 // user submits data for registration, account is created
 app.post("/register", (req, res) => {
@@ -149,7 +171,7 @@ app.post("/register", (req, res) => {
 
   const newUserId = generateRandomString(); // UPDATE WITH CORRECT HELPER FX
   users[newUserId] = {
-    id:  newUserId,
+    id: newUserId,
     email,
     password: bcrypt.hashSync(password, 10)
   };
@@ -159,6 +181,4 @@ app.post("/register", (req, res) => {
 });
 
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
-});
+
