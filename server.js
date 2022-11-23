@@ -9,7 +9,7 @@ const {
   getUserObjectWithID,
   displayUserInfo,
   getFavorites
-} = require("bin/helpers/userHelpers.js");
+} = require("./bin/helpers/userHelpers");
 
 // Listing helper files
 const {
@@ -22,7 +22,7 @@ const {
   loadListingID,
   loadUsersListings,
   setListingSold
-} = require("bin/helpers/listingHelpers.js");
+} = require("./bin/helpers/listingHelpers");
 
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
