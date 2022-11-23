@@ -3,21 +3,22 @@ require('dotenv').config();
 
 // UPDATE WHEN RYAN ORGANIZES HELPERS
 const {
-  getUserInfo,
-  getUserListings,
+  addUser,
   getUserInfo,
   displayUserInfo,
   getFavorites
-} = require("bin/helpers/displayHelpers.js");
-
-module.exports = {
-  addUser,
-  displayUserInfo,
-  getFavorites,
-  getUserInfo,
-  getUserListings,
-  getUserInfo,
-};
+} = require("bin/helpers/userHelpers.js");
+const {
+  addListing,
+  deleteListing,
+  getListings,
+  displayListings,
+  loadFeaturedListings,
+  loadFilteredPosts,
+  loadListingID,
+  loadUsersListings,
+  setListingSold
+} = require("bin/helpers/listingHelpers.js");
 
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');

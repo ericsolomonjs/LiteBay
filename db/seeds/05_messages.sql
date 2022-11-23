@@ -7,7 +7,6 @@ INSERT INTO messages (id, text, sent_from, sent_to) VALUES (6 ,'When will you ha
 INSERT INTO messages (id, text, sent_from, sent_to) VALUES (7 ,'Wednesday.', 4, 2);
 INSERT INTO messages (id, text, sent_from, sent_to) VALUES (8 ,'Do you ship to Toronto?', 3, 1);
 INSERT INTO messages (id, text, sent_from, sent_to) VALUES (9 ,'No.', 1, 3);
-
 INSERT INTO messages (id, text, sent_from, sent_to) VALUES (10, 'This is a message.', 2, 1);
 INSERT INTO messages (id, text, sent_from, sent_to) VALUES (11, 'This is a response.', 1, 2);
 INSERT INTO messages (id, text, sent_from, sent_to) VALUES (12, 'This is a message.', 4, 3);

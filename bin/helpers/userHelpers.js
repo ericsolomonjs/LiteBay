@@ -47,7 +47,7 @@ const getUserInfo = (username) => {
   return data;
 };
 
-//WHAT IS THIS?
+//WHAT IS THIS? IS THIS ERIC'S?
 const displayUserInfo = (infoObject) => {
   //add user data to page HTML
   $("div.user-info-section").prepend(`
@@ -69,9 +69,6 @@ const getFavorites = (username) => {
     });
   return favorites;
 };
-
-
-
 
 module.exports = {
   addUser,

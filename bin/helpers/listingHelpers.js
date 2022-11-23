@@ -54,22 +54,20 @@ const deleteListing = (id) => {
 const getListings = (username) => {
   let listings = null;
 
-  // consider selecting specific items instead of *, for efficiency purposes
+  // use SELECT * if this is not efficient.
   const queryString = `
-    SELECT *
-
-(image_id, alt_text, listing_title, price, username, date added, favourite, text, email)
-
+    SELECT users.username, users.email, listings.listing_title, listings.text, listings.price, listings.date_added, images.id, images.alt_text, favourites.id
     FROM listings
-    FULL JOIN users ON listings.user_id = users.id
-    FULL JOIN images ON listings.image_id = images.id
-    FULL JOIN favourite ON favourite.user_id = users.id
-    WHERE users.username LIKE $1
+    JOIN users ON listings.user_id = users.id
+    JOIN images ON listings.image_id = images.id
+    JOIN favourite ON favourite.user_id = users.id
+    users.username LIKE $1
   `;
 
+  // I THINK THIS NEEDS TO BE FIXED, UNSURE.
   pool.query(queryString, username)
     .then(result => {
-      result.rows.forEach(() => {
+      result.rows.forEach((result) => {
         listings += result.listing.id; // what is "res.listings.id", just id or whole object? there is probably an error with this line.
       });
     })
@@ -222,25 +220,6 @@ const loadUsersListings = (userID) => {
     }).catch(err => console.error('query error', err.stack));
 };
 
-// GET ERIC TO CHECK THIS OUT?
-const getUserListings = (username) => {
-  //get the listings for a user from username (JOIN TABLES)
-  let listings = {};
-  let listingsArray = [];
-  const value = [username];
-  const query = [`SELECT * FROM listings JOIN users ON listings.user_id = users.id WHERE username='$1'`];
-
-  //get matching listings by username
-  pool.query(query, value, (err, res) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    listingsArray = res.rows; //check if possible to use array for id's
-  });
-  return listings;
-};
-
 const setListingSold = (id) => {
   const queryString = `
   UPDATE listings
@@ -267,6 +246,5 @@ module.exports = {
   loadFilteredPosts,
   loadListingID,
   loadUsersListings,
-  getUserListings,
   setListingSold
 };
