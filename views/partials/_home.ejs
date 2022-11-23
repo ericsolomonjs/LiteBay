@@ -1,0 +1,37 @@
+<title>Featured Listings!</title>
+  <!-- ADD FEATURED LISTINGS IN JS -->
+  <div class = "featured-listings-section">
+  <!-- LISTINGS -->
+  </div>
+  <title>Listings</title>
+  <!-- ADD NON-FEATURED LISTINGS IN JS, NO DUPLICATION -->
+  <div class="listings-section">
+    <!-- LISTINGS -->
+    <!-- ARTICLE IS TEMPORARY,WILL BE REPLACED IN JS CODE -->
+    <article class = listing-article>
+      <div>
+        <!-- BUTTON POSTS TO FAVORITES DB OR IF EXISTS, DELETES FROM -->
+        <button type = submit buttonmethod = "POST" buttonaction="/favorite/:post_id" >
+          FAVORITE
+        </button>
+      </div>
+      <div>
+        <!-- TARGET THE CLASS BELOW FOR LISTING TEXT! -->
+        <p class = listing-text>
+        This is the listing text that will be used as an example.
+        </p>
+        <!-- TARGET THE CLASS BELOW FOR LISTING IMAGE! -->
+        <img class="listing-img" src="https://cdn.shopify.com/s/files/1/0622/0660/7617/t/3/assets/1-1654814628780.jpg?v=1654814629" alt="Picture of a motorcycle" width="200px">
+      </div>
+      <div>
+        <!-- TARGET THE CLASS BELOW FOR USER -->
+        <p class="posted-by">
+          Posted by : USER
+        </p>
+        <!-- TARGET THE CLASS BELOW WITH POSTED x [unit of time] AGO -->
+        <p class="posted-time">
+          Posted 7 days ago
+        </p>
+      </div>
+    </article>
+  </div>
