@@ -8,7 +8,12 @@ const pool = new Pool({
 });
 
 // Function adds a listing to the database
-const addListing = function (listing) {
+const addListing = (listing) => {
+  const queryString = `
+  INSERT INTO listings (id, image, text, price, user_id, featured, sold, date_added)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+  RETURNING *;
+  `;
   const values = [
     listing.id,
     listing.image,
@@ -20,12 +25,6 @@ const addListing = function (listing) {
     listing.date_added
   ];
 
-  const queryString = `
-  INSERT INTO listings (id, image, text, price, user_id, featured, sold, date_added)
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-  RETURNING *;
-  `;
-
   return pool
     .query(queryString, values)
     .then((result) => {
@@ -34,52 +33,55 @@ const addListing = function (listing) {
     .catch((error) => {
       console.log(error.message);
     });
-}
+};
 
-const deleteListing = function(id) {
+const deleteListing = (id) => {
   const queryString = `
   DELETE FROM listings
   WHERE listing.id = $1
   `;
 
-  const values = [`${id}`];
-
   return pool
-  .query(queryString, queryParams)
-  .then((result) => {
-    return result.rows;
-  })
-  .catch((error) => {
-    console.log(error.message);
-  });
-}
+    .query(queryString, id)
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+};
 
-function getListings(username) {
+const getListings = (username) => {
   let listings = null;
 
   // consider selecting specific items instead of *, for efficiency purposes
   const queryString = `
     SELECT *
+
+(image_id, alt_text, listing_title, price, username, date added, favourite, text, email)
+
     FROM listings
     FULL JOIN users ON listings.user_id = users.id
     FULL JOIN images ON listings.image_id = images.id
-    FULL JOIN favourite ON favourite.user_id =
+    FULL JOIN favourite ON favourite.user_id = users.id
     WHERE users.username LIKE $1
   `;
-  const values = [`${username}`];
 
-  pool.query(queryString, values)
-    .then(res => {
-      res.rows.forEach(() => {
-        listings += res.listing.id; // what is "res.listings.id", just id or whole object? there is probably an error with this line.
+  pool.query(queryString, username)
+    .then(result => {
+      result.rows.forEach(() => {
+        listings += result.listing.id; // what is "res.listings.id", just id or whole object? there is probably an error with this line.
       });
-    }).catch(err => console.error('query error', err.stack));
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 
   return listings;
-}
+};
 
-function displayListings(favoritesObject) {
-  const $listings = `
+const displayListings = (favoritesObject) => {
+  const listings = `
     <article class="listing-article">
     <div>
       <img class="listing-img" src=${favoritesObject.image_id} alt=${favoritesObject.alt_text}>
@@ -111,10 +113,10 @@ function displayListings(favoritesObject) {
   </article>
     `;
 
-  return $listings;
+  return listings;
 };
 
-function loadFeaturedListings() {
+const loadFeaturedListings = () => {
   const queryString = `
     SELECT *
     FROM listings
@@ -122,129 +124,149 @@ function loadFeaturedListings() {
   `;
 
   pool.query(queryString)
-  .then(res => {
-    res.rows.forEach(listing => {
-      return {
-        listingID: listing.id,
-        imageID: listing.image_id,
-        listingText: listing.text,
-        listingPrice: listing.price,
-        userID: listing.user_id,
-        featured: listing.featured,
-        sold: listing.sold,
-        dateAdded: listing.date_added
-      };
+    .then(res => {
+      res.rows.forEach(listing => {
+        return {
+          listingID: listing.id,
+          imageID: listing.image_id,
+          listingText: listing.text,
+          listingPrice: listing.price,
+          userID: listing.user_id,
+          featured: listing.featured,
+          sold: listing.sold,
+          dateAdded: listing.date_added
+        };
+      });
     })
-  }).catch(err => console.error('query error', err.stack));
-}
+    .catch((error) => {
+      console.log(error.message);
+    });
+};
 
-function loadFilteredPosts (price) {
+const loadFilteredPosts = (price) => {
   const queryString = `
     SELECT *
     FROM listings
     WHERE price <= $1;
   `;
 
-  const filterPrice = process.argv[2];
-  const values = [`${filterPrice}`];
-
-  pool.query(queryString, values)
-  .then(res => {
-    res.rows.forEach(listing => {
-      return {
-        listingID: listing.id,
-        imageID: listing.image_id,
-        listingText: listing.text,
-        listingPrice: listing.price,
-        userID: listing.user_id,
-        featured: listing.featured,
-        sold: listing.sold,
-        dateAdded: listing.date_added
-      };
+  pool.query(queryString, price)
+    .then(res => {
+      res.rows.forEach(listing => {
+        return {
+          listingID: listing.id,
+          imageID: listing.image_id,
+          listingText: listing.text,
+          listingPrice: listing.price,
+          userID: listing.user_id,
+          featured: listing.featured,
+          sold: listing.sold,
+          dateAdded: listing.date_added
+        };
+      });
+    })
+    .catch((error) => {
+      console.log(error.message);
     });
-  }).catch(err => console.error('query error', err.stack));
-}
+};
 
-function loadListingID(listingID) {
+const loadListingID = (listingID) => {
   const queryString = `
     SELECT *
     FROM listings
     WHERE id = $1;
   `;
 
-  const listingID = process.argv[2];
-  const values = [`${listingID}`];
-
-  pool.query(queryString, values)
-  .then(res => {
-    res.rows.forEach(listing => {
-      console.log({
-        listingID: listing.id,
-        imageID: listing.image_id,
-        listingText: listing.text,
-        listingPrice: listing.price,
-        userID: listing.user_id,
-        featured: listing.featured,
-        sold: listing.sold,
-        dateAdded: listing.date_added
-      }); // should be a return. figure out how to return all listing content in a single variable, but listing = [object Object]
+  pool.query(queryString, listingID)
+    .then(res => {
+      res.rows.forEach(listing => {
+        console.log({
+          listingID: listing.id,
+          imageID: listing.image_id,
+          listingText: listing.text,
+          listingPrice: listing.price,
+          userID: listing.user_id,
+          featured: listing.featured,
+          sold: listing.sold,
+          dateAdded: listing.date_added
+        }); // should be a return. figure out how to return all listing content in a single variable, but listing = [object Object]
+      });
     })
-  }).catch(err => console.error('query error', err.stack));
-}
+    .catch((error) => {
+      console.log(error.message);
+    });
+};
 
-function loadUsersListings (listingID) {
+const loadUsersListings = (userID) => {
   const queryString = `
     SELECT *
     FROM listings
+    JOIN users ON listings.user_id = users.id
     WHERE id = $1;
   `;
 
-  const listingID = process.argv[2];
-  const values = [`${listingID}`];
+  pool.query(queryString, userID)
+    .then(res => {
+      res.rows.forEach(listing => {
+        return {
+          listingID: listing.id,
+          imageID: listing.image_id,
+          listingText: listing.text,
+          listingPrice: listing.price,
+          userID: listing.user_id,
+          featured: listing.featured,
+          sold: listing.sold,
+          dateAdded: listing.date_added
+        };
+      });
+    }).catch(err => console.error('query error', err.stack));
+};
 
-  pool.query(queryString, values)
-  .then(res => {
-    res.rows.forEach(listing => {
-      console.log({
-        listingID: listing.id,
-        imageID: listing.image_id,
-        listingText: listing.text,
-        listingPrice: listing.price,
-        userID: listing.user_id,
-        featured: listing.featured,
-        sold: listing.sold,
-        dateAdded: listing.date_added
-      }); // should be a return. figure out how to return all listing content in a single variable, but listing = [object Object]
-    })
-  }).catch(err => console.error('query error', err.stack));
-}
+// GET ERIC TO CHECK THIS OUT?
+const getUserListings = (username) => {
+  //get the listings for a user from username (JOIN TABLES)
+  let listings = {};
+  let listingsArray = [];
+  const value = [username];
+  const query = [`SELECT * FROM listings JOIN users ON listings.user_id = users.id WHERE username='$1'`];
 
-const setListingSold = function(id) {
+  //get matching listings by username
+  pool.query(query, value, (err, res) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    listingsArray = res.rows; //check if possible to use array for id's
+  });
+  return listings;
+};
+
+const setListingSold = (id) => {
   const queryString = `
   UPDATE listings
   SET listings.sold = true
   WHERE listings.id = $1
   `;
-  const values = [`${id}`];
 
   return pool
-  .query(queryString, values)
-  .then((result) => {
-    return result.rows;
-  })
-  .catch((error) => {
-    console.log(error.message);
-  });
-}
+    .query(queryString, id)
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+};
 
 module.exports = {
   addListing,
   deleteListing,
-  displayListings,
   getListings,
+  displayListings,
   loadFeaturedListings,
   loadFilteredPosts,
   loadListingID,
   loadUsersListings,
+  getUserListings,
   setListingSold
-}
+};
