@@ -72,6 +72,8 @@ const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
 
+const createListing = require('./routes/create-listing');
+
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
@@ -79,6 +81,8 @@ app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 // Note: mount other resources here, using the same pattern above
+
+app.use('/create-listing', createListing);
 
 // Home page
 // Warning: avoid creating more routes in this file!
@@ -106,27 +110,6 @@ app.listen(PORT, () => {
 //RYAN
 // get create LISTING
 // post /create
-app.post("/createListing", (req, res) => {
-  const listing = req.body.listing;
-  const image = req.body.image-url;
-  const description = req.body.description;
-  const price = req.body.price;
-  const user = req.session.user_id
-  if (!req.session.user_id) {
-    res.status(401).send("You must be logged in to make a listing.");
-    res.redirect("/login")
-  }
-  else {
-    var today = new Date();
-    var day = String(today.getDate()).padStart(2, '0');
-    var month = String(today.getMonth() + 1).padStart(2, '0');
-    var year = today.getFullYear();
-    today = year + "-" + month + "-" + day;
-
-    addListing(listing, image, description, price, user, FALSE, FALSE, today);
-    res.redirect("/");
-  }
-})
 
 // get admin page
 // post admin page
