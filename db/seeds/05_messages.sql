@@ -1,3 +1,20 @@
-INSERT INTO messages (id, text, sent_from, sent_to) VALUES (1, 'This is a message thats being sent from one user to another', 1, 3);
-INSERT INTO messages (id, text, sent_from, sent_to) VALUES (2, 'This is a message thats being sent from one user to another', 1, 2);
-INSERT INTO messages (id, text, sent_from, sent_to) VALUES (3 ,'This is a message thats being sent from one user to another', 3, 1);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (1, 'Hello, do you sell eggs?', 3, 1);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (2, 'Hi, I have a question.', 1, 2);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (3 ,'No.', 1, 3);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (4 ,'Is this vegan?', 3, 1);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (5 ,'No.', 1, 3);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (6 ,'When will you have more stock?', 2, 4);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (7 ,'Wednesday.', 4, 2);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (8 ,'Do you ship to Toronto?', 3, 1);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (9 ,'No.', 1, 3);
+
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (10, 'This is a message.', 2, 1);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (11, 'This is a response.', 1, 2);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (12, 'This is a message.', 4, 3);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (13, 'This is a response.', 3, 4);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (14, 'This is a message.', 7, 4);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (15, 'This is a response.', 4, 7);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (16, 'This is a message.', 6, 5);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (17, 'This is a response.', 5, 6);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (18, 'This is a message.', 6, 1);
+INSERT INTO messages (id, text, sent_from, sent_to) VALUES (19, 'This is a response.', 1, 6);
