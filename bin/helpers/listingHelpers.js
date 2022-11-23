@@ -78,26 +78,26 @@ const getListings = (username) => {
   return listings;
 };
 
-const displayListings = (favoritesObject) => {
-  const listings = `
+const displayListingCard = (listingObject) => {
+  const listing = `
     <article class="listing-article">
     <div>
-      <img class="listing-img" src=${favoritesObject.image_id} alt=${favoritesObject.alt_text}>
+      <img class="listing-img" src=${listingObject.image_id} alt=${listingObject.alt_text}>
       <p class="sold">
         Sold!
       <p>
     </div>
     <div>
-      <p class="listing-title">${favoritesObject.listing_title}</p>
-      <p class="listing-price">${favoritesObject.price}</p>
+      <p class="listing-title">${listingObject.listing_title}</p>
+      <p class="listing-price">${listingObject.price}</p>
       <p class="posted-by-user">
-        User: ${favoritesObject.username}
+        User: ${listingObject.username}
       </p>
       <p class="posted-date">
-        ${favoritesObject.date_added}
+        ${listingObject.date_added}
       </p>
       <button class="favourite-button" type="submit" buttonmethod="POST" buttonaction="/favorite/:post_id">
-        <% if(${favoritesObject.favourite}){ %>
+        <% if(${listingObject.favourite}){ %>
           <i class="fa-solid fa-bookmark"></i>
         <% } else { %>
           <i class="fa-regular fa-bookmark"></i>
@@ -105,13 +105,13 @@ const displayListings = (favoritesObject) => {
       </button>
     </div>
     <div>
-      <p class="listing-text">${favoritesObject.text}</p>
-      <a href="mailto:${favoritesObject.email}">Email Us</a>
+      <p class="listing-text">${listingObject.text}</p>
+      <a href="mailto:${listingObject.email}">Email Us</a>
     </div>
   </article>
     `;
 
-  return listings;
+  return listing;
 };
 
 const loadFeaturedListings = () => {
@@ -241,7 +241,7 @@ module.exports = {
   addListing,
   deleteListing,
   getListings,
-  displayListings,
+  displayListingCard,
   loadFeaturedListings,
   loadFilteredPosts,
   loadListingID,

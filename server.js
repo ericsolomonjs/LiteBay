@@ -1,18 +1,22 @@
 // load .env data into process.env
 require('dotenv').config();
 
-// UPDATE WHEN RYAN ORGANIZES HELPERS
+// User helper files
 const {
   addUser,
-  getUserInfo,
+  getUserObject,
+  getUserID,
+  getUserObjectWithID,
   displayUserInfo,
   getFavorites
 } = require("bin/helpers/userHelpers.js");
+
+// Listing helper files
 const {
   addListing,
   deleteListing,
   getListings,
-  displayListings,
+  displayListingCard,
   loadFeaturedListings,
   loadFilteredPosts,
   loadListingID,
@@ -91,9 +95,12 @@ app.listen(PORT, () => {
 
 
 
+
+
+
 // renders login page
 app.get("/login", (req, res) => {
-  const loggedIn = getUserByUserId(req.session.user_id, users); // UPDATE WITH CORRECT HELPER FX
+  const loggedIn = getUserObjectWithID(req.session.user_id);
 
   // if logged in, redirect to "home"
   if (loggedIn) {
@@ -108,7 +115,7 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  const authorizedUser = getUserByEmail(email); // UPDATE WITH CORRECT HELPER FX
+  const authorizedUser = getUserObject(null, email); // UPDATE WITH CORRECT HELPER FX
 
   if (!authorizedUser) {
     return res.status(403).send("<p>User with that e-mail cannot be found.</p>");
@@ -130,7 +137,7 @@ app.post("/login", (req, res) => {
 // logs user out, clears session cookies, redirect to login page
 app.post("/logout", (req, res) => {
   req.session = undefined;
-  return res.redirect("/login");
+  return res.redirect("/");
 });
 
 
@@ -140,13 +147,13 @@ app.post("/logout", (req, res) => {
 // renders user registration page
 app.get("/register", (req, res) => {
   const userID = req.session.user_id;
-  const loggedIn = getUserByUserId(userID, users); // UPDATE WITH CORRECT HELPER FX
+  const loggedIn = getUserObject(userID); // UPDATE WITH CORRECT HELPER FX
 
   if (loggedIn) {
-    return res.redirect("/urls");
+    return res.redirect("/");
   }
 
-  return res.render("urls_register");
+  return res.render("login_register");
 });
 
 
@@ -155,30 +162,29 @@ app.get("/register", (req, res) => {
 
 // user submits data for registration, account is created
 app.post("/register", (req, res) => {
+  const fullName = req.body.fullName;
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
 
   // if either text field is empty, return error message
-  if (!username || !email || !password) {
+  if (!fullName || !username || !email || !password) {
     return res.status(400).send("<p>A text field was left blank.</p>");
   }
 
-  // if email exists in database, return error message
-  if (getUserByEmail(users, email)) {  // UPDATE WITH CORRECT HELPER FX
-    return res.status(400).send("<p>Email is already in use.</p>");
+  // if username or email exists in database, return error message
+  if (getUserObject({username, email})) {
+    return res.status(400).send("<p>Account with username/email already exists.</p>");
   }
 
-  const newUserId = generateRandomString(); // UPDATE WITH CORRECT HELPER FX
-  users[newUserId] = {
-    id: newUserId,
+  addUser({
+    username,
     email,
-    password: bcrypt.hashSync(password, 10)
-  };
-  req.session.user_id = newUserId;
+    hashedPassword: bcrypt.hashSync(password, 10),
+    fullName
+  }) // takes in user object and inserts into db
 
-  return res.redirect("/urls");
+  req.session.user_id = getUserID(username);
+
+  return res.redirect("/");
 });
-
-
-

@@ -11,8 +11,8 @@ const addUser = (user) => {
   const values = [
     user.username,
     user.email,
-    user.hashed_password,
-    user.full_name,
+    user.hashedPassword,
+    user.fullName,
   ];
 
   const queryString = `
@@ -31,11 +31,16 @@ const addUser = (user) => {
     });
 };
 
-const getUserInfo = (username) => {
-  const queryString = `SELECT * FROM users WHERE username = $1`;
+const getUserID = (username, email) => {
+  const queryString = `
+    SELECT id
+    FROM users
+    WHERE username = $1 OR email = $2;
+  `;
+  const values = [username, email]
   let data = null;
 
-  pool.query(queryString, username)
+  pool.query(queryString, values)
     .then((result) => {
       data = result.rows;
     })
@@ -46,6 +51,53 @@ const getUserInfo = (username) => {
   //return queried data
   return data;
 };
+
+const getUserObject = (username, email) => {
+  const queryString = `
+    SELECT *
+    FROM users
+    WHERE username = $1 OR email = $2;
+  `;
+  const values = [username, email]
+  let data = null;
+
+  pool.query(queryString, values)
+    .then((result) => {
+      data = result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+
+  //return queried data
+  return data;
+};
+
+const getUserObjectWithID = (username, email) => {
+  const queryString = `
+    SELECT *
+    FROM users
+    WHERE username = $1 OR email = $2;
+  `;
+  const values = [username, email]
+  let data = null;
+
+  pool.query(queryString, values)
+    .then((result) => {
+      data = result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+
+  //return queried data
+  return data;
+};
+
+
+
+
+
 
 //WHAT IS THIS? IS THIS ERIC'S?
 const displayUserInfo = (infoObject) => {
@@ -72,7 +124,9 @@ const getFavorites = (username) => {
 
 module.exports = {
   addUser,
-  getUserInfo,
+  getUserID,
+  getUserObject,
+  getUserObjectWithID,
   displayUserInfo,
   getFavorites
 };
