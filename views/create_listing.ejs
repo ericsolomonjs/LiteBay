@@ -22,17 +22,41 @@
     <%- include('partials/_header') %>
     <main style="margin: 1em;">
       <h2 class="ml-2"><b>Create Listing</b></h2>
-      <form class="form-inline" action="/urls" method="POST">
+      <form action="/urls" method="POST">
         <div class="form-group mb-2 ml-2">
-          <label for="listing">ADD MORE TEXT FIELDS FOR ALL LISTING DATA:</label>
-          <input
-            class="form-control"
-            type="text"
-            name="listing"
-            placeholder="TEXT FIELD PLACEHOLDER"
-            style="width: 300px; margin: 1em"
-          />
-          <button type="submit" class="btn btn-primary">Submit</button>
+            <label>Item</label><br>
+            <input 
+              class="form-control"
+              type="text"
+              name="listing"
+              placeholder="Item"
+              style="width: 450px"
+            /><br>
+            <label>Price</label><br>
+            <input
+              class="form-control"
+              type="number"
+              name="price"
+              placeholder="$5"
+              style="width: 450px"
+            /><br>
+            <label>Image URL</label><br>
+            <input
+              class="form-control"
+              type="text"
+              name="image-url"
+              placeholder="https://picsum.photos/id/80/400/300"
+              style="width: 450px"
+            /><br>
+            <label>Descripton</label><br>
+            <input
+              class="form-control"
+              type="text"
+              name="description"
+              placeholder="Eggs"
+              style="width: 450px; height: 250px"
+            /><br>
+          <button type="submit" class="btn btn-primary">List Item</button>
         </div>
       </form>
     </main>
