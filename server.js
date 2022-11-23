@@ -92,15 +92,33 @@ app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
 
+//DONE
+// "/" home
 
+// get login/register
+// post login
+// post logout
+// post register
 
+//TODO
+// add event listener for category (price, date, ascending & descending) filtering
 
+//RYAN
+// get create LISTING
+// post /create
+
+// get admin page
+// post admin page
+
+//ERIC
+// get user page
+// don't need post user page, eric will do button thing
 
 
 
 // renders login page
 app.get("/login", (req, res) => {
-  const loggedIn = getUserObjectWithID(req.session.user_id);
+  const loggedIn = getUserObjectWithID(req.session.user_id); //fix helper
 
   // if logged in, redirect to "home"
   if (loggedIn) {
@@ -109,40 +127,30 @@ app.get("/login", (req, res) => {
   return res.render("login_register");
 });
 
-
-
 // user enters information and logs in
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  const authorizedUser = getUserObject(null, email); // UPDATE WITH CORRECT HELPER FX
+  const authorizedUser = getUserObject(null, email); // clean up helper fx
 
   if (!authorizedUser) {
-    return res.status(403).send("<p>User with that e-mail cannot be found.</p>");
+    return res.status(403).send("<p>Invalid credentials.</p>");
   }
 
   // if password does not match with stored value, return error message
   if (!bcrypt.compareSync(password, authorizedUser.password)) {
-    return res.status(403).send("<p>Password does not match.</p>");
+    return res.status(403).send("<p>Invalid credentials.</p>");
   } else {
     req.session.user_id = authorizedUser.id;
     return res.redirect("/");
   }
 });
 
-
-
-
-
 // logs user out, clears session cookies, redirect to login page
 app.post("/logout", (req, res) => {
   req.session = undefined;
   return res.redirect("/");
 });
-
-
-
-
 
 // renders user registration page
 app.get("/register", (req, res) => {
@@ -155,10 +163,6 @@ app.get("/register", (req, res) => {
 
   return res.render("login_register");
 });
-
-
-
-
 
 // user submits data for registration, account is created
 app.post("/register", (req, res) => {

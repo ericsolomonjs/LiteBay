@@ -77,7 +77,7 @@ const getUserObjectWithID = (username, email) => {
   const queryString = `
     SELECT *
     FROM users
-    WHERE username = $1 OR email = $2;
+    WHERE username = $1 OR email = $2; // CHANGED TO CORRECT SYNTAX $ETC
   `;
   const values = [username, email]
   let data = null;
