@@ -1,6 +1,9 @@
 // See: https://sass-lang.com/
 
-body,
-html {
-  margin: 0;
+header {
+  top: 0px;
+  position: fixed;
+  width: 100%;
+  font-size: 20pt;
+  background-color: cornflowerblue;
 }
