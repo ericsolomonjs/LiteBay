@@ -106,6 +106,27 @@ app.listen(PORT, () => {
 //RYAN
 // get create LISTING
 // post /create
+app.post("/createListing", (req, res) => {
+  const listing = req.body.listing;
+  const image = req.body.image-url;
+  const description = req.body.description;
+  const price = req.body.price;
+  const user = req.session.user_id
+  if (!req.session.user_id) {
+    res.status(401).send("You must be logged in to make a listing.");
+    res.redirect("/login")
+  }
+  else {
+    var today = new Date();
+    var day = String(today.getDate()).padStart(2, '0');
+    var month = String(today.getMonth() + 1).padStart(2, '0');
+    var year = today.getFullYear();
+    today = year + "-" + month + "-" + day;
+
+    addListing(listing, image, description, price, user, FALSE, FALSE, today);
+    res.redirect("/");
+  }
+})
 
 // get admin page
 // post admin page
