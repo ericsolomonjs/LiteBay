@@ -1,6 +1,6 @@
 // load .env data into process.env
 require('dotenv').config();
-const {  
+const {
   getUserInfo,
   getUserListings,
   getUserInfo,
@@ -16,7 +16,7 @@ const cookieSession = require("cookie-session");
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  user: 'labber', 
+  user: 'labber',
   password: 'labber',
   host: 'localhost',
   database: 'midterm'
@@ -108,7 +108,7 @@ app.post("/login", (req, res) => {
     return res.status(403).send("<p>Password does not match.</p>");
   } else {
     req.session.user_id = authorizedUser.id;
-    return res.redirect("/urls"); // UPDATE WITH CORRECT ROUTE
+    return res.redirect("/");
   }
 });
 
