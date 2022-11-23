@@ -8,12 +8,12 @@ const morgan = require('morgan');
 const cookieSession = require("cookie-session");
 
 // UPDATE WITH CORRECT FUNCTIONS import helper fx from single file
-const {
-  generateRandomString,
-  getUserByEmail,
-  getUserByUserId,
-  urlsForUser
-} = require("./helpers");
+// const {
+//   generateRandomString,
+//   getUserByEmail,
+//   getUserByUserId,
+//   urlsForUser
+// } = require("./helpers");
 const bcrypt = require("bcryptjs");
 
 const PORT = process.env.PORT || 8080;
