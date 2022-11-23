@@ -1,16 +1,3 @@
-const { Pool } = require('pg');
-
-const pool = new Pool({
-  user: 'labber', // may need to change
-  password: 'labber',
-  host: 'localhost',
-  database: 'midterm' // change to project db name
-});
-
-//- DisplayUserInfo(); //display urls tinyapp
-//- DisplayMessages(); //display urls tinyapp
-//- DisplayFavorites(); //display urls tinyapp
-
 function getUserInfo(username) {
   const query = `SELECT * FROM users WHERE username='$1'`;
   let data;
@@ -50,7 +37,6 @@ function getUserInfo (username){
   })
   //return queried data
   return data;
-
 }
 
 function displayUserInfo(infoObject) {
@@ -75,25 +61,10 @@ function getFavorites(username) {
   return favorites;
 }
 
-function displayListings(object){
-  const htmlString = `object.`
+module.exports = {
+  getUserInfo,
+  getUserListings,
+  getUserInfo,
+  displayUserInfo,
+  getFavorites
 }
-
-//commented out messages for now
-// function getMessages(username) {
-//   //get the messages for a user from username (join tables)
-//   let {receivedMessages, sentMessages} = null;
-//   pool.query(`SELECT messages.id FROM messages JOIN users ON messages.sent_to = users.id WHERE username = ${username}`, (req, res) => {
-//     receivedMessages = res.id;
-//   });
-//   pool.query(`SELECT messages.id FROM messages JOIN users ON messages.sent_from = users.id WHERE username = ${username}`, (req, res) => {
-//     sentMessages = res.id;
-//   });
-//   //return messages object  
-//   return {receivedMessages, sentMessages};
-
-// }
-
-// function displayMessages(messagesObject) {
-  
-// }

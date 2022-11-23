@@ -1,8 +1,15 @@
+//   getUserInfo,
+//   getUserListings,
+//   getUserInfo,
+//   displayUserInfo,
+//   getFavorites
+
+
 // Client facing scripts here
 $(document).ready(() => {
   //on document ready load all the listings user etc
-  const filename = document.URL.split('/').pop();
-
+  const filename = (document.URL.split('/').pop() ? document.URL.split('/').pop() : "local") ;
+  console.log('filename = ', filename );
   //populate homepage with assets
   if (filename === "local") {
     const featuredListings = getFeaturedListings();
@@ -15,7 +22,7 @@ $(document).ready(() => {
 
     //loop through and display each listing
     for (let listing in listings) {
-      $('div.listings-section').prepend(displayListings(listings));
+      $('div.listings-section').prepend(displayListings(listing));
     }
   }
 

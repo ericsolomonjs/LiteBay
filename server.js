@@ -1,11 +1,26 @@
 // load .env data into process.env
 require('dotenv').config();
+const {  
+  getUserInfo,
+  getUserListings,
+  getUserInfo,
+  displayUserInfo,
+  getFavorites} = require("bin/helpers/displayHelpers.js")
 
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
 const cookieSession = require("cookie-session");
+
+const { Pool } = require('pg');
+
+const pool = new Pool({
+  user: 'labber', 
+  password: 'labber',
+  host: 'localhost',
+  database: 'midterm'
+});
 
 // UPDATE WITH CORRECT FUNCTIONS import helper fx from single file
 // const {
