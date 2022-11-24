@@ -1,9 +1,6 @@
 // load .env data into process.env
 require('dotenv').config();
 
-
-//const ericHelpers = require("./public/scripts/ericHelpers.js")
-
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
@@ -33,7 +30,7 @@ app.use(express.static('public'));
 // Note: Feel free to replace the example routes below with your own
 const registerRoutes = require('./routes/register')
 const loginRoutes = require('./routes/login')
-const logoutRoutes = require('./routes/logout.js')
+const logoutRoutes = require('./routes/logout')
 const userRoutes = require('./routes/user');
 const adminRoutes = require('./routes/admin-page')
 const createListing = require('./routes/create-listing');
@@ -49,7 +46,7 @@ app.use('/logout', logoutRoutes);
 app.use('/user', userRoutes);
 app.use('/admin', adminRoutes);
 app.use('/create-listing', createListing);
-app.use('/listings-api', listingsApi);
+app.use('/api/listings', listingsApi);
 
 // Home page
 // Warning: avoid creating more routes in this file!
@@ -57,11 +54,7 @@ app.use('/listings-api', listingsApi);
 
 
 app.get('/', (req, res) => {
-  // console.log("start of / route")
-  
-  // $.get("/listings-api/featuredListings/")()
-
-   res.render('index');
+  res.render('index');
 });
 
 app.listen(PORT, () => {
