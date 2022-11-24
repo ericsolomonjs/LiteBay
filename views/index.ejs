@@ -4,31 +4,50 @@
 <head>
   <title>Home Page</title>
 
-  <meta charset="UTF-8" >
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- StyleSheets -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Foreign scripts -->
-  <script src="/vendor/jquery-3.0.0.js"></script>
-  <script defer src="/scripts/app.js"></script>
-
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  
   <!-- OUR SCRIPTS -->
+  <script defer src="/scripts/loadHome.js"></script>
+  <script defer src="/scripts/ericHelpers.js"></script>
+  
+
 
 </head>
 
 <body>
   <%- include('partials/_header.ejs') %>
-  <div class="load-page-section">
-    <!-- Page builder builds pages here -->
-  </div>
-  </div>
+    <div>
+
+
+      <title>Featured Listings!</title>
+      <!-- ADD FEATURED LISTINGS IN JS -->
+      <div class="featured-listings-section">
+        <!-- LISTINGS -->
+      </div>
+      <title>Listings</title>
+      <!-- ADD NON-FEATURED LISTINGS IN JS, NO DUPLICATION -->
+      <div class="listings-section">
+        <!-- LISTINGS -->
+        
+        
+      </div>
+
+    </div>
+    </div>
 </body>
 
 </html>
