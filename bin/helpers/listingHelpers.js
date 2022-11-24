@@ -35,6 +35,7 @@ const addListing = (listing) => {
     });
 };
 
+// Function deletes listing from database
 const deleteListing = (id) => {
   const queryString = `
   DELETE FROM listings
@@ -51,7 +52,35 @@ const deleteListing = (id) => {
     });
 };
 
-const getListings = (username) => {
+// get all listings for a user
+const getListingWithID = (listingID) => {
+  const queryString = `
+    SELECT *
+    FROM listings
+    WHERE id = $1;
+  `;
+
+  pool.query(queryString, listingID)
+    .then(res => {
+      res.rows.forEach(listing => {
+        return {
+          listingID: listing.id,
+          imageID: listing.image_id,
+          listingText: listing.text,
+          listingPrice: listing.price,
+          userID: listing.user_id,
+          featured: listing.featured,
+          sold: listing.sold,
+          dateAdded: listing.date_added
+        };
+      });
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+};
+
+const getListingsWithUsername = (username) => {
   let listings = null;
 
   // use SELECT * if this is not efficient.
@@ -64,11 +93,10 @@ const getListings = (username) => {
     users.username LIKE $1
   `;
 
-  // I THINK THIS NEEDS TO BE FIXED, UNSURE.
   pool.query(queryString, username)
     .then(result => {
       result.rows.forEach((result) => {
-        listings += result.listing.id; // what is "res.listings.id", just id or whole object? there is probably an error with this line.
+        listings += result;
       });
     })
     .catch((error) => {
@@ -78,7 +106,32 @@ const getListings = (username) => {
   return listings;
 };
 
-const displayListingCard = (listingObject) => {
+const getListingsWithUserID = (userID) => {
+  const queryString = `
+    SELECT *
+    FROM listings
+    JOIN users ON listings.user_id = users.id
+    WHERE id = $1;
+  `;
+
+  pool.query(queryString, userID)
+    .then(res => {
+      res.rows.forEach(listing => {
+        return {
+          listingID: listing.id,
+          imageID: listing.image_id,
+          listingText: listing.text,
+          listingPrice: listing.price,
+          userID: listing.user_id,
+          featured: listing.featured,
+          sold: listing.sold,
+          dateAdded: listing.date_added
+        };
+      });
+    }).catch(err => console.error('query error', err.stack));
+};
+
+const getHtmlListingCard = (listingObject) => {
   const listing = `
     <article class="listing-article">
     <div>
@@ -114,7 +167,7 @@ const displayListingCard = (listingObject) => {
   return listing;
 };
 
-const loadFeaturedListings = () => {
+const getFeaturedListings = () => {
   const queryString = `
     SELECT *
     FROM listings
@@ -141,7 +194,7 @@ const loadFeaturedListings = () => {
     });
 };
 
-const loadFilteredPosts = (price) => {
+const getFilteredListings = (price) => {
   const queryString = `
     SELECT *
     FROM listings
@@ -168,58 +221,6 @@ const loadFilteredPosts = (price) => {
     });
 };
 
-const loadListingID = (listingID) => {
-  const queryString = `
-    SELECT *
-    FROM listings
-    WHERE id = $1;
-  `;
-
-  pool.query(queryString, listingID)
-    .then(res => {
-      res.rows.forEach(listing => {
-        console.log({
-          listingID: listing.id,
-          imageID: listing.image_id,
-          listingText: listing.text,
-          listingPrice: listing.price,
-          userID: listing.user_id,
-          featured: listing.featured,
-          sold: listing.sold,
-          dateAdded: listing.date_added
-        }); // should be a return. figure out how to return all listing content in a single variable, but listing = [object Object]
-      });
-    })
-    .catch((error) => {
-      console.log(error.message);
-    });
-};
-
-const loadUsersListings = (userID) => {
-  const queryString = `
-    SELECT *
-    FROM listings
-    JOIN users ON listings.user_id = users.id
-    WHERE id = $1;
-  `;
-
-  pool.query(queryString, userID)
-    .then(res => {
-      res.rows.forEach(listing => {
-        return {
-          listingID: listing.id,
-          imageID: listing.image_id,
-          listingText: listing.text,
-          listingPrice: listing.price,
-          userID: listing.user_id,
-          featured: listing.featured,
-          sold: listing.sold,
-          dateAdded: listing.date_added
-        };
-      });
-    }).catch(err => console.error('query error', err.stack));
-};
-
 const setListingSold = (id) => {
   const queryString = `
   UPDATE listings
@@ -240,11 +241,11 @@ const setListingSold = (id) => {
 module.exports = {
   addListing,
   deleteListing,
-  getListings,
-  displayListingCard,
-  loadFeaturedListings,
-  loadFilteredPosts,
-  loadListingID,
-  loadUsersListings,
+  getListingWithID,
+  getListingsWithUsername,
+  getListingsWithUserID,
+  getHtmlListingCard,
+  getFeaturedListings,
+  getFilteredListings,
   setListingSold
 };
