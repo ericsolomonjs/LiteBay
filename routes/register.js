@@ -1,25 +1,24 @@
 const express = require('express');
 const router  = express.Router();
 const bcrypt = require("bcryptjs");
+const cookieSession = require("cookie-session");
+
+router.use(cookieSession({
+  name: "session",
+  keys: ["fdj3i42o2k3ggdger644212"],
+  maxAge: 24 * 60 * 60 * 1000
+}));
 
 const {
   addUser,
+  getUserObjectWithUsername,
+  getUserObjectWithEmail,
+  getUserIDWithUsername
 } = require("../bin/helpers/userHelpers");
 
-// renders user registration page
-router.get("/register", (req, res) => {
-  const userID = req.session.user_id;
-  const loggedIn = getUserObject(userID); // UPDATE WITH CORRECT HELPER FX
-
-  if (loggedIn) {
-    return res.redirect(req.baseUrl);
-  }
-
-  return res.render("login_register");
-});
-
 // user submits data for registration, account is created
-router.post("/register", (req, res) => {
+router.post("/", (req, res) => {
+  console.log(req.body)
   const fullName = req.body.fullName;
   const username = req.body.username;
   const email = req.body.email;
@@ -31,8 +30,8 @@ router.post("/register", (req, res) => {
   }
 
   // if username or email exists in database, return error message
-  if (getUserObject({username, email})) {
-    return res.status(400).send("<p>Account with username/email already exists.</p>");
+  if (getUserObjectWithEmail(email) || getUserObjectWithUsername(username)) {
+    return res.status(400).send("<p>Account with that email/username already exists.</p>");
   }
 
   addUser({
@@ -42,7 +41,7 @@ router.post("/register", (req, res) => {
     fullName
   }) // takes in user object and inserts into db
 
-  req.session.user_id = getUserID(username);
+  req.session.user_id = getUserIDWithUsername(username);
 
   return res.redirect(req.baseUrl);
 });

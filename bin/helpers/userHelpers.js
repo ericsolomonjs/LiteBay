@@ -1,3 +1,4 @@
+//figure out how to use const db = require('../db/connection'); 3 dots?
 const { Pool } = require("pg");
 
 const pool = new Pool({
@@ -37,12 +38,10 @@ const getIsAdmin = (id) => {
   const queryString = `
     SELECT is_admin
     FROM users
-    WHERE username = $1;  
+    WHERE username = $1;
   `;
 
-  const values = [id];
-
-  pool.query(queryString, values)
+  pool.query(queryString, [id])
     .then((result) => {
       data = result.rows;
     })
@@ -62,7 +61,7 @@ const getUserIDWithEmail = (email) => {
   `;
   let data = null;
 
-  pool.query(queryString, email)
+  pool.query(queryString, [email])
     .then((result) => {
       data = result.rows;
     })
@@ -82,7 +81,7 @@ const getUserIDWithUsername = (username) => {
   `;
   let data = null;
 
-  pool.query(queryString, username)
+  pool.query(queryString, [username])
     .then((result) => {
       data = result.rows;
     })
@@ -102,7 +101,7 @@ const getUserObjectWithUsername = (username) => {
   `;
   let data = null;
 
-  pool.query(queryString, username)
+  pool.query(queryString, [username])
     .then((result) => {
       data = result.rows;
     })
@@ -117,11 +116,11 @@ const getUserObjectWithEmail = (email) => {
   const queryString = `
     SELECT *
     FROM users
-    WHERE email = $1;
+    WHERE email LIKE $1;
   `;
   let data = null;
 
-  pool.query(queryString, email)
+  pool.query(queryString, [email])
     .then((result) => {
       data = result.rows;
     })
@@ -140,7 +139,7 @@ const getUserObjectWithID = (id) => {
   `;
   let data = null;
 
-  pool.query(queryString, id)
+  pool.query(queryString, [id])
     .then((result) => {
       data = result.rows;
     })
@@ -158,14 +157,15 @@ const displayUserInfo = (infoObject) => {
   ${infoObject.email}`);
 };
 
+// TO BE FIXED
 const getFavorites = (username) => {
   let favorites = null;
   const queryString = `SELECT * FROM favorites
   JOIN users ON favorites.user_id=users.id
   JOIN listings ON listings.id = listings_id
-  WHERE username='$1'`;
+  WHERE username = '$1'`;
 
-  pool.query(queryString, username)
+  pool.query(queryString, [username])
     .then((req, res) => {
       //has to return object of listings that are user favorites so currently wrong
       favorites = res.rows;

@@ -1,7 +1,13 @@
 const express = require('express');
 const router  = express.Router();
 const bcrypt = require("bcryptjs");
+const cookieSession = require("cookie-session");
 
+router.use(cookieSession({
+  name: "session",
+  keys: ["fdj3i42o2k3ggdger644212"],
+  maxAge: 24 * 60 * 60 * 1000
+}));
 
 const {
   getUserObjectWithEmail,
@@ -9,8 +15,8 @@ const {
 } = require("../bin/helpers/userHelpers");
 
 // renders login page
-router.get("/login", (req, res) => {
-  const loggedIn = getUserObjectWithID(req.session.user_id); //fix helper
+router.get("/", (req, res) => {
+  const loggedIn = getUserObjectWithID(req.session.user_id);
 
   // if logged in, redirect to "home"
   if (loggedIn) {
@@ -20,7 +26,7 @@ router.get("/login", (req, res) => {
 });
 
 // user enters information and logs in
-router.post("/login", (req, res) => {
+router.post("/", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const authorizedUser = getUserObjectWithEmail(email);
@@ -37,12 +43,5 @@ router.post("/login", (req, res) => {
     return res.redirect(req.baseUrl);
   }
 });
-
-// logs user out, clears session cookies, redirect to login page
-router.post("/logout", (req, res) => {
-  req.session = undefined;
-  return res.redirect(req.baseUrl);
-});
-
 
 module.exports = router;

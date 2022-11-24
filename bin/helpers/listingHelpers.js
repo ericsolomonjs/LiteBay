@@ -1,3 +1,4 @@
+//figure out how to use const db = require('../db/connection'); 3 dots?
 const { Pool } = require("pg");
 
 const pool = new Pool({
@@ -39,11 +40,11 @@ const addListing = (listing) => {
 const deleteListing = (id) => {
   const queryString = `
   DELETE FROM listings
-  WHERE listing.id = $1
+  WHERE listings.id = $1
   `;
 
   return pool
-    .query(queryString, id)
+  .query(queryString, [id])
     .then((result) => {
       return result.rows;
     })
@@ -60,7 +61,7 @@ const getListingWithID = (listingID) => {
     WHERE id = $1;
   `;
 
-  pool.query(queryString, listingID)
+  pool.query(queryString, [listingID])
     .then(res => {
       res.rows.forEach(listing => {
         return {
@@ -90,10 +91,10 @@ const getListingsWithUsername = (username) => {
     JOIN users ON listings.user_id = users.id
     JOIN images ON listings.image_id = images.id
     JOIN favourite ON favourite.user_id = users.id
-    users.username LIKE $1
+    users.username LIKE $1;
   `;
 
-  pool.query(queryString, username)
+  pool.query(queryString, [username])
     .then(result => {
       result.rows.forEach((result) => {
         listings += result;
@@ -114,7 +115,7 @@ const getListingsWithUserID = (userID) => {
     WHERE id = $1;
   `;
 
-  pool.query(queryString, userID)
+  pool.query(queryString, [userID])
     .then(res => {
       res.rows.forEach(listing => {
         return {
@@ -201,7 +202,7 @@ const getFilteredListings = (price) => {
     WHERE price <= $1;
   `;
 
-  pool.query(queryString, price)
+  pool.query(queryString, [price])
     .then(res => {
       res.rows.forEach(listing => {
         return {
@@ -229,7 +230,7 @@ const setListingSold = (id) => {
   `;
 
   return pool
-    .query(queryString, id)
+    .query(queryString, [id])
     .then((result) => {
       return result.rows;
     })

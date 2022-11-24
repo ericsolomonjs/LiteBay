@@ -1,5 +1,12 @@
 const express = require('express');
 const router  = express.Router();
+const cookieSession = require("cookie-session");
+
+router.use(cookieSession({
+  name: "session",
+  keys: ["fdj3i42o2k3ggdger644212"],
+  maxAge: 24 * 60 * 60 * 1000
+}));
 
 const {
   getUserObjectWithID,
@@ -14,7 +21,7 @@ const {
 
 // renders admin page
 router.get("/", (req, res) => {
-  const loggedIn = getUserObjectWithID(req.session.user_id); //fix helper
+  const loggedIn = getUserObjectWithID(req.session.user_id);
 
   // if logged in, redirect to "admin"
   if (loggedIn) {
@@ -23,7 +30,7 @@ router.get("/", (req, res) => {
   return res.render("login_register");
 });
 
-// renders users "my urls", all short url id's owned by the logged in user
+// renders admin page, and listing associated with userID
 router.get("/", (req, res) => {
   const loggedIn = getUserObjectWithID(req.session.user_id);
 
