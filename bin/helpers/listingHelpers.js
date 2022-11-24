@@ -1,4 +1,4 @@
-//figure out how to use const db = require('../db/connection'); 3 dots?
+// const db = require('../../db/connection');
 const { Pool } = require("pg");
 
 const pool = new Pool({
@@ -11,18 +11,16 @@ const pool = new Pool({
 // Function adds a listing to the database
 const addListing = (listing) => {
   const queryString = `
-  INSERT INTO listings (id, image, text, price, user_id, featured, sold, date_added)
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+  INSERT INTO listings (image, text, price, user_id, featured, date_added)
+  VALUES ($1, $2, $3, $4, $5, $6,)
   RETURNING *;
   `;
   const values = [
-    listing.id,
     listing.image,
     listing.text,
     listing.price,
     listing.user_id,
     listing.featured,
-    listing.sold,
     listing.date_added
   ];
 
@@ -86,12 +84,11 @@ const getListingsWithUsername = (username) => {
 
   // use SELECT * if this is not efficient.
   const queryString = `
-    SELECT users.username, users.email, listings.listing_title, listings.text, listings.price, listings.date_added, images.id, images.alt_text, favourites.id
+    SELECT users.username, users.email, listings.listing_title, listings.text, listings.price, listings.date_added, images.id as image_id, images.alt_text
     FROM listings
     JOIN users ON listings.user_id = users.id
     JOIN images ON listings.image_id = images.id
-    JOIN favourite ON favourite.user_id = users.id
-    users.username LIKE $1;
+    WHERE users.username = '$1s';
   `;
 
   pool.query(queryString, [username])
@@ -150,7 +147,7 @@ const getHtmlListingCard = (listingObject) => {
       <p class="posted-date">
         ${listingObject.date_added}
       </p>
-      <button class="favourite-button" type="submit" buttonmethod="POST" buttonaction="/favorite/:post_id">
+      <button class="favourite-button" type="submit" buttonmethod="POST" buttonaction="/favourite/:post_id">
         <% if(${listingObject.favourite}){ %>
           <i class="fa-solid fa-bookmark"></i>
         <% } else { %>

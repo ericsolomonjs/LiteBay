@@ -1,4 +1,4 @@
-//figure out how to use const db = require('../db/connection'); 3 dots?
+// const db = require('.../db/connection');
 const { Pool } = require("pg");
 
 const pool = new Pool({
@@ -116,26 +116,26 @@ const getUserObjectWithEmail = (email) => {
   const queryString = `
     SELECT *
     FROM users
-    WHERE email LIKE $1;
+    WHERE email = $1;
   `;
   let data = null;
 
-  pool.query(queryString, [email])
+  return pool.query(queryString, [email])
     .then((result) => {
-      data = result.rows;
+      data = result.rows[0];
+      return data;
     })
     .catch((error) => {
       console.log(error.message);
+      return null;
     });
-
-  return data;
 };
 
 const getUserObjectWithID = (id) => {
   const queryString = `
     SELECT *
     FROM users
-    WHERE ID = $1
+    WHERE id = $1
   `;
   let data = null;
 
@@ -157,20 +157,25 @@ const displayUserInfo = (infoObject) => {
   ${infoObject.email}`);
 };
 
-// TO BE FIXED
-const getFavorites = (username) => {
-  let favorites = null;
-  const queryString = `SELECT * FROM favorites
-  JOIN users ON favorites.user_id=users.id
-  JOIN listings ON listings.id = listings_id
-  WHERE username = '$1'`;
+const getFavourites = (username) => {
+  let favourites = null;
+
+  // FIX users.username, users.email to be sellers username and email
+  const queryString = `
+    SELECT users.username, users.email, listings.listing_title, listings.text, listings.price, listings.date_added, listings.sold, images.url, images.alt_text, favourites.id as favourite_id
+    FROM favourites
+    JOIN users ON favourites.user_id = users.id
+    JOIN listings ON favourites.listing_id = listings.id
+    JOIN images ON listings.image_id = images.id
+    WHERE username = '$1'
+  `;
 
   pool.query(queryString, [username])
     .then((req, res) => {
-      //has to return object of listings that are user favorites so currently wrong
-      favorites = res.rows;
+      //has to return object of listings that are user favourites so currently wrong
+      favourites = res.rows;
     });
-  return favorites;
+  return favourites;
 };
 
 module.exports = {
@@ -182,5 +187,5 @@ module.exports = {
   getUserObjectWithEmail,
   getUserObjectWithID,
   displayUserInfo,
-  getFavorites
+  getFavourites
 };
