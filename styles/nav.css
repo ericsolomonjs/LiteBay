@@ -1,21 +1,50 @@
-nav {
-  position: fixed;
-  padding: 0.5em;
-  display: flex;
-  height: 100px;
-  width: 100%;
-  background-color: #5228EE;
-  color: #EEFFEE;
-  /** font TBD */
-  vertical-align: top;
-  top: 0;
-  justify-content: space-between;
-  z-index: 4000;
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: #22188F;
 }
 
-/** Navbar adaptability by screen size */
-@media only screen and (min-width: 1024px) {
-  nav {
-    height: 100px;
-  }
+li, a, button {
+  font-family: 'Fredoka One', cursive;
+  font-weight: 400;
+  font-size: 16px;
+  color: #EEFFEE;
+  text-decoration: none;
+}
+
+.logo {
+  font-family: 'Fredoka One', cursive;
+  font-weight: 400;
+  font-size: 28px;
+  color: #eeeeee;
+  text-decoration: none;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 10%;
+}
+
+navButton {
+  margin: 0px 10px 0px 10px;
+  padding: 10px 10px;
+}
+
+loginButton {
+  margin: 0px 10px 0px 10px;
+  padding: 10px 10px;
+  background-color: rgba(94,114,197,1);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+login:hover {
+  background-color: rgba(114,134,217,0.2);
 }
