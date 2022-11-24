@@ -19,10 +19,10 @@ app.post("/", (req, res) => {
   const description = req.body.description;
   const price = req.body.price;
   const user = req.session.user_id
-  if (!req.session.user_id) {
+
+  if (!user) {
     res.redirect("/login");
-  }
-  else {
+  }  else {
     var today = new Date();
     var day = String(today.getDate()).padStart(2, '0');
     var month = String(today.getMonth() + 1).padStart(2, '0');
