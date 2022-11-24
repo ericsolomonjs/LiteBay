@@ -1,5 +1,5 @@
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 const bcrypt = require("bcryptjs");
 const cookieSession = require("cookie-session");
 
@@ -46,8 +46,7 @@ router.post("/", async (req, res) => {
         return res.status(403).send("<p>Invalid credentials.</p>");
       } else {
         req.session.user_id = authorizedUser.id;
-        // return res.redirect(req.baseUrl.splice(1)); ask mentor about req.baseURL
-        return res.redirect('/')
+        return res.redirect('/');
       }
     })
     .catch((error) => {

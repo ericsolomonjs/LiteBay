@@ -1,5 +1,5 @@
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 const cookieSession = require("cookie-session");
 
 router.use(cookieSession({
@@ -9,65 +9,61 @@ router.use(cookieSession({
 }));
 
 const {
-  getUserObjectWithID,
+  getIsAdmin,
+  getUserObjectWithID
 } = require("../bin/helpers/userHelpers");
 
 // Listing helper files
 const {
   deleteListing,
   getListingWithID,
-  getListingsWithUserID,
 } = require("../bin/helpers/listingHelpers");
 
 // renders admin page
 router.get("/", (req, res) => {
-  const loggedIn = getUserObjectWithID(req.session.user_id);
 
-  // if logged in, redirect to "admin"
-  if (loggedIn) {
-    // return res.redirect(req.baseUrl + "/admin");
-    // return res.redirect(req.baseUrl.splice(1)); ask mentor about req.baseURL
-    return res.redirect('http://localhost:8080/admin')
-  }
-  return res.render("login_register");
-});
-
-// renders admin page, and listing associated with userID
-router.get("/", (req, res) => {
-  const loggedIn = getUserObjectWithID(req.session.user_id);
-
-  // if user does not exist, return error message
-  if (!loggedIn) {
-    return res.send("<p>Please log in to view your listing's.</p>");
-  }
-
-  return res.render("admin_page", getListingsWithUserID(req.session.user_id));
+  getIsAdmin(req.session.user_id)
+    .then((adminStatus) => {
+      if (adminStatus) {
+        return res.render("admin_page");
+      }
+      return res.send("<p>Please log in to view your listing's.</p>");
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 });
 
 // deletes specific listing
-router.post("/listing/delete", (req, res) => {
-  const loggedIn = getUserObjectWithID(req.session.user_id);
-  const listing = getListingWithID(req.params.id);
+router.post("/:id/delete", (req, res) => {
 
-  // if listing doesn't exist, return error message
-  if (!listing) {
-    return res.send("<p>Listing does not exist.</p>");
-  }
+  getListingWithID(req.params.id)
+    .then((listing) => {
 
-  // if user does not exist, return error message
-  if (!loggedIn) {
-    return res.send("<p>Please log in to delete your listing.</p>");
-  }
+      // if listing doesn't exist, return error message
+      if (!listing) {
+        return res.send("<p>Listing does not exist.</p>");
+      }
 
-  // if session user is owner of listing, delete listing
-  if (loggedIn.id === listing.user_id) {
-    deleteListing(listing.id)
-    // return res.redirect(req.baseUrl + "/admin");
-    // return res.redirect(req.baseUrl.splice(1)); ask mentor about req.baseURL
-    return res.redirect('http://localhost:8080/admin')
-  } else {
-    return res.send("<p>You are not the owner of this Short URL ID.</p>");
-  }
+      getUserObjectWithID(req.session.user_id)
+        .then((loggedIn) => {
+          // if user does not exist, return error message
+          if (!loggedIn) {
+            return res.send("<p>Please log in to delete your listing.</p>");
+          }
+
+          // if session user is owner of listing, delete listing
+          if (loggedIn.id === listing.user_id) {
+            deleteListing(listing.id);
+            return res.redirect('/admin');
+          } else {
+            return res.send("<p>You are not the owner of this Short URL ID.</p>");
+          }
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    });
 });
 
- module.exports = router;
+module.exports = router;

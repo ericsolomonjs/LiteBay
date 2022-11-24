@@ -10,18 +10,17 @@ const pool = new Pool({
 
 // ADD A USER
 const addUser = (user) => {
+  const queryString = `
+  INSERT INTO users (username, email, hashed_password, full_name)
+  VALUES ($1, $2, $3, $4)
+  RETURNING *;
+`;
   const values = [
     user.username,
     user.email,
     user.hashedPassword,
     user.fullName,
   ];
-
-  const queryString = `
-    INSERT INTO users (username, email, hashed_password, full_name)
-    VALUES ($1, $2, $3, $4)
-    RETURNING *;
-  `;
 
   return pool
     .query(queryString, values)
@@ -39,7 +38,7 @@ const getIsAdmin = (id) => {
   const queryString = `
     SELECT is_admin
     FROM users
-    WHERE username = $1;
+    WHERE id = $1;
   `;
 
   return pool.query(queryString, [id])
@@ -49,8 +48,8 @@ const getIsAdmin = (id) => {
     .catch((error) => {
       console.log(error.message);
       return null;
-    })
-}
+    });
+};
 
 // GET USER ID FUNCTIONS
 const getUserIDWithEmail = (email) => {

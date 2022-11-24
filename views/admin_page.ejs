@@ -14,7 +14,7 @@
 <body>
   <%- include('partials/_header') %>
     <main style="margin: 1em;">
-      <h3>My Listings</h3>
+      <h3>Admin Page</h3>
       <table class="table">
         <thead>
           <tr>
@@ -25,24 +25,16 @@
           </tr>
         </thead>
         <tbody>
-          <% for (let id in urls) { %>
             <tr>
-              <td>
-                <%= id %>
-              </td>
-              <td>
-                <%= urls[id].longURL %>
-              </td>
               <td>
                 <form method="GET" action="/urls/<%= id %>"><button type="submit"
                     class="btn btn-outline-primary">Edit</button></form>
               </td>
               <td>
-                <form method="POST" action="/urls/<%= id %>/delete"><button type="submit"
+                <form method="POST" action="/admin/<%= id %>/delete"><button type="submit"
                     class="btn btn-outline-danger">Delete</button></form>
               </td>
             </tr>
-            <% } %>
         </tbody>
       </table>
     </main>

@@ -27,7 +27,7 @@ const addListing = (listing) => {
   return pool
     .query(queryString, values)
     .then((result) => {
-      return result.rows; // result.rows.[0]?
+      return result.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
@@ -42,9 +42,9 @@ const deleteListing = (id) => {
   `;
 
   return pool
-  .query(queryString, [id])
+    .query(queryString, [id])
     .then((result) => {
-      return result.rows; // result.rows.[0]]?
+      return result.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
@@ -98,7 +98,7 @@ const getListingsWithUsername = (username) => {
     })
     .catch((error) => {
       console.log(error.message);
-      return null
+      return null;
     });
 };
 
@@ -234,6 +234,44 @@ const setListingSold = (id) => {
     });
 };
 
+const renderAdminListings = (listings, target) => {
+  for (let listing of listings["listings"]) {
+    const timeSince = Date.now() - listing.date_added;
+    const timeString = getTimeString(timeSince);
+    console.log(listing);
+    $(target).append(`
+    <article class=listing-article>
+          <div>
+            <!-- BUTTON POSTS TO FAVORITES DB OR IF EXISTS, DELETES FROM -->
+            <button type=submit buttonmethod="POST" buttonaction="/favourite/:post_id">
+              FAVOURITE
+            </button>
+            <img class="listing-img"
+              src="${listing.url}"
+              alt="${listing.alt_text}" width="70%">
+          </div>
+          <div>
+            <!-- TARGET THE CLASS BELOW FOR LISTING TEXT! -->
+            <p>${listing.listing_title} </p>
+            <p class=listing-text>
+              ${listing.text}
+            </p>
+            <!-- TARGET THE CLASS BELOW FOR LISTING in IMAGE! -->
+            </div>
+          <div>
+            <!-- TARGET THE CLASS BELOW FOR USER -->
+            <p class="posted-by">
+              Posted by : ${listing.username}
+            </p>
+            <!-- TARGET THE CLASS BELOW WITH POSTED x [unit of time] AGO -->
+            <p class="posted-time">${timeString}</p>
+            <p>$${listing.price}</p>
+          </div>
+        </article>
+    `);
+  }
+}
+
 module.exports = {
   addListing,
   deleteListing,
@@ -243,5 +281,6 @@ module.exports = {
   getHtmlListingCard,
   getFeaturedListings,
   getFilteredListings,
-  setListingSold
+  setListingSold,
+  renderAdminListings
 };

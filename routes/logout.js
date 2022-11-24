@@ -11,8 +11,8 @@ router.use(cookieSession({
 // logs user out, clears session cookies, redirect to home page
 router.post("/", (req, res) => {
   req.session = undefined;
-  // return res.redirect(req.baseUrl.splice(1)); ask mentor about req.baseURL
-  return res.redirect('http://localhost:8080/')
+
+  return res.redirect('/')
 });
 
 module.exports = router;
