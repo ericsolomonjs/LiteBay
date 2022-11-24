@@ -1,40 +1,36 @@
 const db = require('../connection');
 
-const getListings = () => {
-  return db.query('SELECT * FROM listings;')
-    .then(data => {
-      return data.rows;
-    });
+const getListings = async () => {
+  const data = await db.query(`SELECT * FROM listings;`);
+  return data.rows;
 };
 
-const getFeatured = () => {
-  return db.query('SELECT * FROM listings WHERE featured = true;')
-    .then(data => {
-      return data.rows;
-    });
+const getFeatured = async () => {
+  //fix this query to be secure data wise
+  const data = await db.query(`SELECT * FROM listings 
+  JOIN users ON users.id = listings.user_id
+  JOIN images ON images.id = listings.image_id
+  WHERE featured = true;`);
+  return data.rows;
 };
 
-const getNotFeatured = () => {
-  return db.query('SELECT * FROM listings WHERE featured = false;')
-    .then(data => {
-      return data.rows;
-    });
+const getNotFeatured = async () => {
+  const data = await db.query('SELECT * FROM listings WHERE featured = false;');
+  return data.rows;
 };
 
-const getFavourites = (username) => {
-  return db.query(`SELECT * FROM listings 
-  JOIN favourites ON listings.id=favourties.listings_id 
+//fix get favourites here
+const getFavourites = async (username) => {
+  const data = await db.query(`SELECT * FROM listings 
+  JOIN favourites ON listings.id=favourites.listing_id 
   JOIN users ON favourites.user_id=users.id
-  WHERE username = ${username};`)
-    .then(data => {
-      return data.rows;
-    });
+  WHERE username = ${username};`);
+  return data.rows;
 };
 
-
-module.exports = { 
+module.exports = {
   getListings,
   getFeatured,
   getNotFeatured,
-  getFavourites 
+  getFavourites
 };
