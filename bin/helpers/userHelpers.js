@@ -31,16 +31,17 @@ const addUser = (user) => {
     });
 };
 
-const getUserID = (username, email) => {
+
+// GET USER ID FUNCTIONS
+const getUserIDWithEmail = (email) => {
   const queryString = `
     SELECT id
     FROM users
-    WHERE username = $1 OR email = $2;
+    WHERE email = $1;
   `;
-  const values = [username, email]
   let data = null;
 
-  pool.query(queryString, values)
+  pool.query(queryString, email)
     .then((result) => {
       data = result.rows;
     })
@@ -48,20 +49,39 @@ const getUserID = (username, email) => {
       console.log(error.message);
     });
 
-  //return queried data
   return data;
 };
 
-const getUserObject = (username, email) => {
+
+const getUserIDWithUsername = (username) => {
+  const queryString = `
+    SELECT id
+    FROM users
+    WHERE username = $1;
+  `;
+  let data = null;
+
+  pool.query(queryString, username)
+    .then((result) => {
+      data = result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+
+  return data;
+};
+
+// GET USER OBJECT FUNCTIONS
+const getUserObjectWithUsername = (username) => {
   const queryString = `
     SELECT *
     FROM users
-    WHERE username = $1 OR email = $2;
+    WHERE username = $1;
   `;
-  const values = [username, email]
   let data = null;
 
-  pool.query(queryString, values)
+  pool.query(queryString, username)
     .then((result) => {
       data = result.rows;
     })
@@ -69,20 +89,18 @@ const getUserObject = (username, email) => {
       console.log(error.message);
     });
 
-  //return queried data
   return data;
 };
 
-const getUserObjectWithID = (username, email) => {
+const getUserObjectWithEmail = (email) => {
   const queryString = `
     SELECT *
     FROM users
-    WHERE username = $1 OR email = $2; // CHANGED TO CORRECT SYNTAX $ETC
+    WHERE email = $1;
   `;
-  const values = [username, email]
   let data = null;
 
-  pool.query(queryString, values)
+  pool.query(queryString, email)
     .then((result) => {
       data = result.rows;
     })
@@ -90,21 +108,33 @@ const getUserObjectWithID = (username, email) => {
       console.log(error.message);
     });
 
-  //return queried data
   return data;
 };
 
+const getUserObjectWithID = (id) => {
+  const queryString = `
+    SELECT *
+    FROM users
+    WHERE ID = $1
+  `;
+  let data = null;
 
+  pool.query(queryString, id)
+    .then((result) => {
+      data = result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 
+  return data;
+};
 
-
-
-//WHAT IS THIS? IS THIS ERIC'S?
 const displayUserInfo = (infoObject) => {
   //add user data to page HTML
   $("div.user-info-section").prepend(`
-  ${data.username},
-  ${data.email}`);
+  ${infoObject.username},
+  ${infoObject.email}`);
 };
 
 const getFavorites = (username) => {
@@ -124,8 +154,10 @@ const getFavorites = (username) => {
 
 module.exports = {
   addUser,
-  getUserID,
-  getUserObject,
+  getUserIDWithEmail,
+  getUserIDWithUsername,
+  getUserObjectWithUsername,
+  getUserObjectWithEmail,
   getUserObjectWithID,
   displayUserInfo,
   getFavorites
