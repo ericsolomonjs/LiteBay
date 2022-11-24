@@ -15,7 +15,10 @@ const getFeatured = async () => {
 };
 
 const getNotFeatured = async () => {
-  const data = await db.query('SELECT * FROM listings WHERE featured = false;');
+  const data = await db.query(`SELECT * FROM listings 
+  JOIN users ON users.id = listings.user_id
+  JOIN images ON images.id = listings.image_id
+  WHERE featured = false;`);
   return data.rows;
 };
 
