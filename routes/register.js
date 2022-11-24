@@ -18,7 +18,6 @@ const {
 
 // user submits data for registration, account is created
 router.post("/", (req, res) => {
-  console.log(req.body)
   const fullName = req.body.fullName;
   const username = req.body.username;
   const email = req.body.email;
@@ -43,7 +42,8 @@ router.post("/", (req, res) => {
 
   req.session.user_id = getUserIDWithUsername(username);
 
-  return res.redirect(req.baseUrl);
+  // return res.redirect(req.baseUrl.splice(1)); ask mentor about req.baseURL
+  return res.redirect('http://localhost:8080/')
 });
 
 module.exports = router;

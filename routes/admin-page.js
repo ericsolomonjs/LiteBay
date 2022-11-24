@@ -25,7 +25,9 @@ router.get("/", (req, res) => {
 
   // if logged in, redirect to "admin"
   if (loggedIn) {
-    return res.redirect(req.baseUrl + "/admin");
+    // return res.redirect(req.baseUrl + "/admin");
+    // return res.redirect(req.baseUrl.splice(1)); ask mentor about req.baseURL
+    return res.redirect('http://localhost:8080/admin')
   }
   return res.render("login_register");
 });
@@ -60,7 +62,9 @@ router.post("/listing/delete", (req, res) => {
   // if session user is owner of listing, delete listing
   if (loggedIn.id === listing.user_id) {
     deleteListing(listing.id)
-    return res.redirect(req.baseUrl + "/admin");
+    // return res.redirect(req.baseUrl + "/admin");
+    // return res.redirect(req.baseUrl.splice(1)); ask mentor about req.baseURL
+    return res.redirect('http://localhost:8080/admin')
   } else {
     return res.send("<p>You are not the owner of this Short URL ID.</p>");
   }

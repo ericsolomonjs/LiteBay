@@ -26,10 +26,12 @@ router.get("/", (req, res) => {
 });
 
 // user enters information and logs in
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  const authorizedUser = getUserObjectWithEmail(email);
+
+  const authorizedUser = await getUserObjectWithEmail(email);
+  // console.log(`User: ${JSON.stringify(authorizedUser)}`)
 
   if (!authorizedUser) {
     return res.status(403).send("<p>Invalid credentials.</p>");
@@ -40,7 +42,8 @@ router.post("/", (req, res) => {
     return res.status(403).send("<p>Invalid credentials.</p>");
   } else {
     req.session.user_id = authorizedUser.id;
-    return res.redirect(req.baseUrl);
+    // return res.redirect(req.baseUrl.splice(1)); ask mentor about req.baseURL
+    return res.redirect('http://localhost:8080/')
   }
 });
 
