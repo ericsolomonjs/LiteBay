@@ -13,39 +13,47 @@
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/home.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
     integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Foreign scripts -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-  
+
   <!-- OUR SCRIPTS -->
   <script defer src="/scripts/loadHome.js"></script>
   <script defer src="/scripts/ericHelpers.js"></script>
-  
+
 
 
 </head>
 
 <body>
   <%- include('partials/_header.ejs') %>
-    <div>
+    <div class="home-page">
+      <div class="filters-section">
+        <form action="/api/listings/filter?=20" method="get">
+          <button> Less than $20</button>
+        </form>
+        <form action="/api/listings/filter?=50" method="get">
+          <button> Less than $50</button>
+        </form>
 
 
-      <title>Featured Listings!</title>
-      <!-- ADD FEATURED LISTINGS IN JS -->
-      <div class="featured-listings-section">
-        <!-- LISTINGS -->
       </div>
-      <title>Listings</title>
-      <!-- ADD NON-FEATURED LISTINGS IN JS, NO DUPLICATION -->
-      <div class="listings-section">
-        <!-- LISTINGS -->
-        
-        
+      <div class="all-listings-section">
+        <title>Featured Listings!</title>
+        <!-- ADD FEATURED LISTINGS IN JS -->
+        <div class="featured-listings-section">
+          <!-- LISTINGS -->
+        </div>
+        <title>Listings</title>
+        <!-- ADD NON-FEATURED LISTINGS IN JS, NO DUPLICATION -->
+        <div class="listings-section">
+          <!-- LISTINGS -->
+        </div>
       </div>
-
     </div>
     </div>
 </body>

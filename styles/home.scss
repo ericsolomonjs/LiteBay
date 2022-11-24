@@ -1,0 +1,26 @@
+.home-page {
+  margin-top:75px;
+  display:flex;
+  flex-direction:row;
+  padding:0.5em;
+  width: 90%;
+}
+
+.filters-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: centre;
+  margin:2em;;
+  width:30%;
+}
+
+.filters-section button {
+  margin: 10px;
+  
+}
+
+.listing-article {
+  display:flex;
+  flex-direction:row;
+  
+}
