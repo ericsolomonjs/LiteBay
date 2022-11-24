@@ -1,5 +1,5 @@
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 const bcrypt = require("bcryptjs");
 const cookieSession = require("cookie-session");
 
@@ -29,21 +29,37 @@ router.post("/", (req, res) => {
   }
 
   // if username or email exists in database, return error message
-  if (getUserObjectWithEmail(email) || getUserObjectWithUsername(username)) {
-    return res.status(400).send("<p>Account with that email/username already exists.</p>");
-  }
+  getUserObjectWithEmail(email)
+    .then((result) => {
+      if (result) {
+        return res.status(400).send("<p>Account with that email/username already exists.</p>");
+      }
 
-  addUser({
-    username,
-    email,
-    hashedPassword: bcrypt.hashSync(password, 10),
-    fullName
-  }) // takes in user object and inserts into db
+      getUserObjectWithUsername(username)
+        .then((result) => {
+          if (result) {
+            return res.status(400).send("<p>Account with that email/username already exists.</p>");
+          }
 
-  req.session.user_id = getUserIDWithUsername(username);
+          // takes in user object and inserts into db
+          addUser({
+            username,
+            email,
+            hashedPassword: bcrypt.hashSync(password, 10),
+            fullName
+          });
 
-  // return res.redirect(req.baseUrl.splice(1)); ask mentor about req.baseURL
-  return res.redirect('http://localhost:8080/')
+          // sets cookies
+          req.session.user_id = getUserIDWithUsername(username);
+          return res.redirect('/');
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 });
 
 module.exports = router;

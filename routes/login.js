@@ -16,13 +16,17 @@ const {
 
 // renders login page
 router.get("/", (req, res) => {
-  const loggedIn = getUserObjectWithID(req.session.user_id);
-
-  // if logged in, redirect to "home"
-  if (loggedIn) {
-    return res.redirect(req.baseUrl);
-  }
-  return res.render("login_register");
+  getUserObjectWithID(req.session.user_id)
+    .then((loggedIn) => {
+      // if logged in, redirect to "home"
+      if (loggedIn) {
+        return res.redirect("/");
+      }
+      return res.render("login_register");
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 });
 
 // user enters information and logs in
@@ -30,21 +34,25 @@ router.post("/", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  const authorizedUser = await getUserObjectWithEmail(email);
-  // console.log(`User: ${JSON.stringify(authorizedUser)}`)
+  getUserObjectWithEmail(email)
+    .then((authorizedUser) => {
+      // if logged in, redirect to "home"
+      if (!authorizedUser) {
+        return res.status(403).send("<p>Invalid credentials.</p>");
+      }
 
-  if (!authorizedUser) {
-    return res.status(403).send("<p>Invalid credentials.</p>");
-  }
-
-  // if password does not match with stored value, return error message
-  if (!bcrypt.compareSync(password, authorizedUser.hashed_password)) {
-    return res.status(403).send("<p>Invalid credentials.</p>");
-  } else {
-    req.session.user_id = authorizedUser.id;
-    // return res.redirect(req.baseUrl.splice(1)); ask mentor about req.baseURL
-    return res.redirect('http://localhost:8080/')
-  }
+      // if password does not match with stored value, return error message
+      if (!bcrypt.compareSync(password, authorizedUser.hashed_password)) {
+        return res.status(403).send("<p>Invalid credentials.</p>");
+      } else {
+        req.session.user_id = authorizedUser.id;
+        // return res.redirect(req.baseUrl.splice(1)); ask mentor about req.baseURL
+        return res.redirect('/')
+      }
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 });
 
 module.exports = router;
