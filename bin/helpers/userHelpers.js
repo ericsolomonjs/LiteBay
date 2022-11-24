@@ -7,6 +7,7 @@ const pool = new Pool({
   database: 'midterm'
 });
 
+// ADD A USER
 const addUser = (user) => {
   const values = [
     user.username,
@@ -31,6 +32,26 @@ const addUser = (user) => {
     });
 };
 
+// DETERMINE USER ADMIN STATUS
+const getIsAdmin = (id) => {
+  const queryString = `
+    SELECT is_admin
+    FROM users
+    WHERE username = $1;  
+  `;
+
+  const values = [id];
+
+  pool.query(queryString, values)
+    .then((result) => {
+      data = result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    })
+
+  return data;
+}
 
 // GET USER ID FUNCTIONS
 const getUserIDWithEmail = (email) => {
@@ -154,6 +175,7 @@ const getFavorites = (username) => {
 
 module.exports = {
   addUser,
+  getIsAdmin,
   getUserIDWithEmail,
   getUserIDWithUsername,
   getUserObjectWithUsername,

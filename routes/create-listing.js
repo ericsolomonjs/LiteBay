@@ -1,6 +1,9 @@
 const express = require('express');
 const router  = express.Router();
 
+const {getIsAdmin} = require("../bin/helpers/userHelpers");
+const {addListing} = require("../bin/helpers/listingHelpers");
+
 
 app.get("/", (req, res) => {
   const isAdmin = getIsAdmin(req.session.user_id);
