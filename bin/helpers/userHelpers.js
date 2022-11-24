@@ -146,6 +146,22 @@ const displayUserInfo = (infoObject) => {
   ${infoObject.email}`);
 };
 
+const setAdmin = (username) => {
+  const queryString = `
+    UPDATE users
+    SET is_admin = true
+    WHERE users.username = $1
+  `;
+
+  return pool
+    .query(queryString, [username])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+};
 
 
 
@@ -181,5 +197,6 @@ module.exports = {
   getUserObjectWithEmail,
   getUserObjectWithID,
   displayUserInfo,
-  getFavourites
+  getFavourites,
+  setAdmin
 };
