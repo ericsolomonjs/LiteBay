@@ -1,26 +1,39 @@
 .home-page {
   margin-top:75px;
+  padding:20px;
   display:flex;
   flex-direction:row;
   padding:0.5em;
-  width: 90%;
+  width: 65%;
 }
 
 .filters-section {
   display: flex;
   flex-direction: column;
-  justify-content: centre;
   margin:2em;;
-  width:30%;
+  width:35%;
 }
 
 .filters-section button {
   margin: 10px;
-  
+  width:100px;
 }
 
 .listing-article {
-  display:flex;
-  flex-direction:row;
-  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0.4em;
+}
+
+.listing-article div {
+  width:30%;
+}
+.listing-article button {
+  margin: 0.4em;
+}
+
+title {
+  display:contents;
+  font-size: 20pt;
 }
