@@ -1,4 +1,4 @@
-// const db = require('.../db/connection');
+// const db = require('../../db/connection');
 const { Pool } = require("pg");
 
 const pool = new Pool({
@@ -18,18 +18,19 @@ const addUser = (user) => {
   ];
 
   const queryString = `
-  INSERT INTO users (username, email, hashed_password, full_name)
-  VALUES ($1, $2, $3, $4)
-  RETURNING *;
+    INSERT INTO users (username, email, hashed_password, full_name)
+    VALUES ($1, $2, $3, $4)
+    RETURNING *;
   `;
 
   return pool
     .query(queryString, values)
     .then((result) => {
-      return result.rows;
+      return result.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
+      return null;
     });
 };
 
@@ -41,15 +42,14 @@ const getIsAdmin = (id) => {
     WHERE username = $1;
   `;
 
-  pool.query(queryString, [id])
+  return pool.query(queryString, [id])
     .then((result) => {
-      data = result.rows;
+      return result.rows[0].is_admin;
     })
     .catch((error) => {
       console.log(error.message);
+      return null;
     })
-
-  return data;
 }
 
 // GET USER ID FUNCTIONS
@@ -59,17 +59,15 @@ const getUserIDWithEmail = (email) => {
     FROM users
     WHERE email = $1;
   `;
-  let data = null;
 
-  pool.query(queryString, [email])
+  return pool.query(queryString, [email])
     .then((result) => {
-      data = result.rows;
+      return result.rows[0].id;
     })
     .catch((error) => {
       console.log(error.message);
+      return null;
     });
-
-  return data;
 };
 
 
@@ -79,17 +77,15 @@ const getUserIDWithUsername = (username) => {
     FROM users
     WHERE username = $1;
   `;
-  let data = null;
 
-  pool.query(queryString, [username])
+  return pool.query(queryString, [username])
     .then((result) => {
-      data = result.rows;
+      return result.rows[0].id;
     })
     .catch((error) => {
       console.log(error.message);
+      return null;
     });
-
-  return data;
 };
 
 // GET USER OBJECT FUNCTIONS
@@ -99,17 +95,15 @@ const getUserObjectWithUsername = (username) => {
     FROM users
     WHERE username = $1;
   `;
-  let data = null;
 
-  pool.query(queryString, [username])
+  return pool.query(queryString, [username])
     .then((result) => {
-      data = result.rows;
+      return result.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
+      return null;
     });
-
-  return data;
 };
 
 const getUserObjectWithEmail = (email) => {
@@ -118,12 +112,10 @@ const getUserObjectWithEmail = (email) => {
     FROM users
     WHERE email = $1;
   `;
-  let data = null;
 
   return pool.query(queryString, [email])
     .then((result) => {
-      data = result.rows[0];
-      return data;
+      return result.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
@@ -137,17 +129,15 @@ const getUserObjectWithID = (id) => {
     FROM users
     WHERE id = $1
   `;
-  let data = null;
 
-  pool.query(queryString, [id])
+  return pool.query(queryString, [id])
     .then((result) => {
-      data = result.rows;
+      return result.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
+      return null;
     });
-
-  return data;
 };
 
 const displayUserInfo = (infoObject) => {
@@ -157,6 +147,11 @@ const displayUserInfo = (infoObject) => {
   ${infoObject.email}`);
 };
 
+
+
+
+
+//FIX
 const getFavourites = (username) => {
   let favourites = null;
 

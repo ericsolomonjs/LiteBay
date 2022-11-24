@@ -11,9 +11,9 @@ const pool = new Pool({
 // Function adds a listing to the database
 const addListing = (listing) => {
   const queryString = `
-  INSERT INTO listings (image, text, price, user_id, featured, date_added)
-  VALUES ($1, $2, $3, $4, $5, $6,)
-  RETURNING *;
+    INSERT INTO listings (image, text, price, user_id, featured, date_added)
+    VALUES ($1, $2, $3, $4, $5, $6,)
+    RETURNING *;
   `;
   const values = [
     listing.image,
@@ -27,7 +27,7 @@ const addListing = (listing) => {
   return pool
     .query(queryString, values)
     .then((result) => {
-      return result.rows;
+      return result.rows; // result.rows.[0]?
     })
     .catch((error) => {
       console.log(error.message);
@@ -37,14 +37,14 @@ const addListing = (listing) => {
 // Function deletes listing from database
 const deleteListing = (id) => {
   const queryString = `
-  DELETE FROM listings
-  WHERE listings.id = $1
+    DELETE FROM listings
+    WHERE listings.id = $1
   `;
 
   return pool
   .query(queryString, [id])
     .then((result) => {
-      return result.rows;
+      return result.rows; // result.rows.[0]]?
     })
     .catch((error) => {
       console.log(error.message);
@@ -80,7 +80,6 @@ const getListingWithID = (listingID) => {
 };
 
 const getListingsWithUsername = (username) => {
-  let listings = null;
 
   // use SELECT * if this is not efficient.
   const queryString = `
@@ -94,14 +93,13 @@ const getListingsWithUsername = (username) => {
   pool.query(queryString, [username])
     .then(result => {
       result.rows.forEach((result) => {
-        listings += result;
+        return result;
       });
     })
     .catch((error) => {
       console.log(error.message);
+      return null
     });
-
-  return listings;
 };
 
 const getListingsWithUserID = (userID) => {
@@ -221,9 +219,9 @@ const getFilteredListings = (price) => {
 
 const setListingSold = (id) => {
   const queryString = `
-  UPDATE listings
-  SET listings.sold = true
-  WHERE listings.id = $1
+    UPDATE listings
+    SET listings.sold = true
+    WHERE listings.id = $1
   `;
 
   return pool
