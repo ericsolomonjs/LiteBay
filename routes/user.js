@@ -10,7 +10,7 @@ const router  = express.Router();
 
 router.get('/', (req, res) => {
   if (req.session.user_id) {
-    res.render('user_page');
+    res.render('user_page.ejs');
   } else {
     res.redirect('login');
   }
