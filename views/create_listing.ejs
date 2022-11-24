@@ -22,7 +22,7 @@
     <%- include('partials/_header') %>
     <main style="margin: 1em;">
       <h2 class="ml-2"><b>Create Listing</b></h2>
-      <form action="/urls" method="POST">
+      <form action="/create-listing/" method="POST">
         <div class="form-group mb-2 ml-2">
             <label>Item</label><br>
             <input 
@@ -44,7 +44,7 @@
             <input
               class="form-control"
               type="text"
-              name="image-url"
+              name="image_url"
               placeholder="https://picsum.photos/id/80/400/300"
               style="width: 450px"
             /><br>

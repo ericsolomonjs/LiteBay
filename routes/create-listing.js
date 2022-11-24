@@ -24,7 +24,7 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res) => {
   const listing = req.body.listing;
-  const image = req.body.image-url;
+  const image = req.body.image_url;
   const description = req.body.description;
   const price = req.body.price;
   const user = req.session.user_id
@@ -38,7 +38,7 @@ router.post("/", (req, res) => {
     var year = today.getFullYear();
     today = year + "-" + month + "-" + day;
 
-    addListing(listing, image, description, price, user, FALSE, FALSE, today);
+    addListing(listing, image, description, price, user, false, false, today);
     res.redirect("/");
   }
 })
