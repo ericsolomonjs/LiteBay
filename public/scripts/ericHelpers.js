@@ -14,45 +14,44 @@ const loadHomeListings = () => {
 const loadFavouriteListings = () => {
   $.get("/api/listings/favourite-listings/", (listings) => {})
   .done((listings) => {
-    renderListings(listings, ".favorite-listings-area");
+    renderListings(listings, ".favourite-listings-section");
   }) 
 }
 
 const renderListings = (listings, target) => {
-  for (let listing in listings["listings"]) {
+  for (let listing of listings["listings"]) {
+    const timeSince = Date.now() - listing.date_added;
+    const timeString = getTimeString(timeSince);
+    console.log(listing);
     $(target).append(`
     <article class=listing-article>
           <div>
             <!-- BUTTON POSTS TO FAVORITES DB OR IF EXISTS, DELETES FROM -->
-            <button type=submit buttonmethod="POST" buttonaction="/favorite/:post_id">
-              FAVORITE
+            <button type=submit buttonmethod="POST" buttonaction="/favourite/:post_id">
+              FAVOURITE
             </button>
+            <img class="listing-img"
+              src="${listing.url}"
+              alt="${listing.alt_text}" width="70%">
           </div>
           <div>
             <!-- TARGET THE CLASS BELOW FOR LISTING TEXT! -->
+            <p>${listing.listing_title} </p>
             <p class=listing-text>
               ${listing.text}
             </p>
-            <!-- TARGET THE CLASS BELOW FOR LISTING IMAGE! -->
-            <img class="listing-img"
-              src="https://cdn.shopify.com/s/files/1/0622/0660/7617/t/3/assets/1-1654814628780.jpg?v=1654814629"
-              alt="Picture of a motorcycle" width="200px">
-          </div>
+            <!-- TARGET THE CLASS BELOW FOR LISTING in IMAGE! -->
+            </div>
           <div>
             <!-- TARGET THE CLASS BELOW FOR USER -->
             <p class="posted-by">
-              Posted by : USER
+              Posted by : ${listing.username}
             </p>
             <!-- TARGET THE CLASS BELOW WITH POSTED x [unit of time] AGO -->
-            <p class="posted-time">
-              Posted 7 days ago
-            </p>
+            <p class="posted-time">${timeString}</p>
+            <p>$${listing.price}</p>
           </div>
         </article>
-    
-    ${listing.username}   ${listing.text} etc etc
-    `)
+    `);
   }
 }
-
-
