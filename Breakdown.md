@@ -56,7 +56,7 @@ Admin(seller) can:
 3. GET '/users/:id'
   - DisplayUserInfo(); //display urls tinyapp
   - DisplayMessages(); //display urls tinyapp
-  - DisplayFavorites(); //display urls tinyapp
+  - DisplayFavourites(); //display urls tinyapp
 
 4. GET '/admin/:id'
   - Check if id is admin
@@ -87,7 +87,7 @@ Eric
 3. DisplayUserInfo(); //display urls tinyapp
 4. GetMessages(username);
 5. DisplayMessages(); //display urls tinyapp
-6. GetFavorites()
+6. GetFavourites()
 
 Sid
 1. C / CREATE DB schema buysell_midterm_db
