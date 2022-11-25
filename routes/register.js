@@ -48,9 +48,7 @@ router.post("/", (req, res) => {
             fullName
           })
             .then((newUser) => {
-              // sets cookies
-              req.session.user_id = newUser.id
-              return res.redirect('/');
+              return res.redirect('/login');
             })
             .catch((error) => {
               console.log(error.message);
