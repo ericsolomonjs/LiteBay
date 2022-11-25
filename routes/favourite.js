@@ -1,33 +1,33 @@
 const express = require('express');
 const router = express.Router();
-const cookieSession = require("cookie-session");
+const cookieSession = require('cookie-session');
 
 router.use(cookieSession({
-  name: "session",
-  keys: ["fdj3i42o2k3ggdger644212"],
+  name: 'session',
+  keys: ['fdj3i42o2k3ggdger644212'],
   maxAge: 24 * 60 * 60 * 1000
 }));
 
 const {
+  checkFavourite,
   setFavourite,
-  removeFavourite,
-  checkFavourite
-} = require("../bin/helpers/userHelpers");
+  removeFavourite
+} = require('../bin/helpers/userHelpers');
 
-router.post("/:id", (req, res) => {
+// adds a list to users favourites list
+router.post('/:id', (req, res) => {
+
+  // if user not logged in, return error message
   if (!req.session.user_id) {
-    return res.send("<p>Please login to favourite a listing.</p>");
+    return res.send('<p>Please login to favourite a listing.</p>');
   }
-  console.log('userid: ', req.session.user_id)
-  console.log('listingid: ', req.params.id)
 
   // add a check to see if you already favourite a specific post
   checkFavourite(req.session.user_id, req.params.id)
     .then((result) => {
-      console.log('routeres: ', result)
 
       if (result) {
-        return res.send("<p>You have already favourited this listing.</p>");
+        return res.send('<p>You have already favourited this listing.</p>');
       }
 
       setFavourite(req.session.user_id, req.params.id)
@@ -40,9 +40,12 @@ router.post("/:id", (req, res) => {
     });
 });
 
-router.post("/:id/delete", (req, res) => {
+// removes a listing from users favourites list
+router.post('/:id/delete', (req, res) => {
+
+  // if user not logged in, return error message
   if (!req.session.user_id) {
-    return res.send("<p>Please login to favourite a listing.</p>");
+    return res.send('<p>Please login to favourite a listing.</p>');
   }
 
   removeFavourite(req.session.user_id, req.params.id)

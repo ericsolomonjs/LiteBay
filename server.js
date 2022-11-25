@@ -35,9 +35,9 @@ const userRoutes = require('./routes/user');
 const adminRoutes = require('./routes/admin-page');
 const createListing = require('./routes/create-listing');
 const listingsApi = require('./routes/listings-api');
-const userApi = require("./routes/user-api");
-const favourite = require("./routes/favourite");
-const filters = require("./routes/filters");
+const userApi = require('./routes/user-api');
+const favourite = require('./routes/favourite');
+const filters = require('./routes/filters');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own

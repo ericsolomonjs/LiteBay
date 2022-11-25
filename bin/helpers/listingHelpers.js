@@ -1,6 +1,6 @@
 const db = require('../../db/connection');
 
-// Function adds a listing to the database
+// function adds a listing to the database
 const addListing = (listing) => {
   const queryString = `
     INSERT INTO listings (listing_title, image_id, text, price, user_id, date_added)
@@ -16,33 +16,33 @@ const addListing = (listing) => {
     listing.date_added
   ];
 
-  return db
-    .query(queryString, values)
-    .then((result) => {
-      return result.rows[0];
+  return db.query(queryString, values)
+    .then((listingObject) => {
+      return listingObject.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
     });
 };
 
-// Function deletes listing from database
+// function deletes listing from database using specific listing id
 const deleteListing = (id) => {
   const queryString = `
     DELETE FROM listings
     WHERE listings.id = $1
+    RETURNING *;
   `;
 
-  return db
-    .query(queryString, [id])
-    .then((result) => {
-      return result.rows[0];
+  return db.query(queryString, [id])
+    .then((listingObject) => {
+      return listingObject.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
     });
 };
 
+// add image to images database table
 const addImage = (url, altText) => {
   const queryString = `
     INSERT INTO images (url, alt_text)
@@ -51,17 +51,16 @@ const addImage = (url, altText) => {
   `;
   const values = [url, altText];
 
-  return db
-    .query(queryString, values)
-    .then((result) => {
-      return result.rows[0];
+  return db.query(queryString, values)
+    .then((imageObject) => {
+      return imageObject.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
     });
 };
 
-// get all listings for a user
+// get a listing with a specific listing id
 const getListingWithID = (listingID) => {
   const queryString = `
     SELECT *
@@ -70,8 +69,8 @@ const getListingWithID = (listingID) => {
   `;
 
   return db.query(queryString, [listingID])
-    .then((result) => {
-      return result.rows[0];
+    .then((listingObject) => {
+      return listingObject.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
@@ -79,8 +78,8 @@ const getListingWithID = (listingID) => {
     });
 };
 
+// get listings object with specific username
 const getListingsWithUsername = (username) => {
-
   const queryString = `
     SELECT users.username, users.email, listings.listing_title, listings.text, listings.price, listings.date_added, images.id as image_id, images.alt_text
     FROM listings
@@ -90,8 +89,8 @@ const getListingsWithUsername = (username) => {
   `;
 
   return db.query(queryString, [username])
-    .then((result) => {
-      return result.rows[0];
+    .then((listingsObject) => {
+      return listingsObject.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
@@ -99,6 +98,7 @@ const getListingsWithUsername = (username) => {
     });
 };
 
+// get listings object with specific user ID
 const getListingsWithUserID = (userID) => {
   const queryString = `
     SELECT *
@@ -108,8 +108,8 @@ const getListingsWithUserID = (userID) => {
   `;
 
   return db.query(queryString, [userID])
-    .then((result) => {
-      return result.rows[0];
+    .then((listingsObject) => {
+      return listingsObject.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
@@ -117,6 +117,7 @@ const getListingsWithUserID = (userID) => {
     });
 };
 
+// returns an HTML of a listing. initial template, updated by Eric in public/scripts/ericHelpers.js
 const getHtmlListingCard = (listingObject) => {
   const listing = `
     <article class="listing-article">
@@ -153,6 +154,7 @@ const getHtmlListingCard = (listingObject) => {
   return listing;
 };
 
+// get listings object where featured = true
 const getFeaturedListings = () => {
   const queryString = `
     SELECT *
@@ -161,8 +163,8 @@ const getFeaturedListings = () => {
   `;
 
   return db.query(queryString)
-    .then((result) => {
-      return result.rows[0];
+    .then((featuredListings) => {
+      return featuredListings.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
@@ -170,6 +172,7 @@ const getFeaturedListings = () => {
     });
 };
 
+// get listings object where filter conditions exist
 const getFilteredListings = (price) => {
   const queryString = `
     SELECT *
@@ -178,8 +181,8 @@ const getFilteredListings = (price) => {
   `;
 
   return db.query(queryString, [price])
-    .then((result) => {
-      return result.rows[0];
+    .then((filteredListings) => {
+      return filteredListings.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
@@ -187,6 +190,7 @@ const getFilteredListings = (price) => {
     });
 };
 
+// updates listing database table to sold = true
 const setListingSold = (id) => {
   const queryString = `
     UPDATE listings
@@ -195,18 +199,31 @@ const setListingSold = (id) => {
     RETURNING *;
   `;
 
-  return db
-    .query(queryString, [id])
-    .then((result) => {
-      return result.rows[0];
+  return db.query(queryString, [id])
+    .then((listingObject) => {
+      const queryString = `
+        UPDATE images
+        SET url = 'https://thumbs.dreamstime.com/b/sold-sign-sticker-stamp-vector-texture-154049307.jpg'
+        WHERE id = $1
+        RETURNING *;
+      `;
+
+      return db.query(queryString, [listingObject.rows[0].image_id])
+        .then((imageObject) => {
+          return imageObject.rows[0];
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
     })
     .catch((error) => {
       console.log(error.message);
-      return null;
     });
 };
 
-setImageSold = (id) => {
+// change listing image to SOLD in red.
+// could refactor this to put it inside setListingSold() function above
+const setImageSold = (id) => {
   const queryString = `
     UPDATE images
     SET url = 'https://thumbs.dreamstime.com/b/sold-sign-sticker-stamp-vector-texture-154049307.jpg'
@@ -214,17 +231,16 @@ setImageSold = (id) => {
     RETURNING *;
   `;
 
-  return db
-    .query(queryString, [id])
-    .then((result) => {
-      return result.rows[0];
+  return db.query(queryString, [id])
+    .then((imageObject) => {
+      return imageObject.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
-      return null;
     });
 };
 
+// updates listing database table to featured = true
 const setFeatured = (id) => {
   const queryString = `
     UPDATE listings
@@ -233,14 +249,12 @@ const setFeatured = (id) => {
     RETURNING *;
   `;
 
-  return db
-    .query(queryString, [id])
-    .then((result) => {
-      return result.rows[0];
+  return db.query(queryString, [id])
+    .then((listingsObject) => {
+      return listingsObject.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
-      return null;
     });
 };
 
@@ -255,5 +269,6 @@ module.exports = {
   getFeaturedListings,
   getFilteredListings,
   setListingSold,
+  setImageSold,
   setFeatured
 };
