@@ -3,25 +3,30 @@
 
 <head>
 
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="/styles/nav.scss" />
   <link rel="stylesheet" href="/styles/main.scss" />
-  <link rel="stylesheet" href="styles/login.scss" />
+  <link rel="stylesheet" href="/styles/login.scss" />
   
   <title>User Login</title>
+  
 </head>
 
 <body>
   <%- include('partials/_header') %>
     <div>
+      <br><br><br><br>
       <h2><b>Login</b></h2>
       <form method="POST" action="/login">
         <div>
           <div>
-            <label for="email">Email address:</label>
+            <label for="email" class="input-label">Email address:</label>
           </div>
           <div>
             <input
-             
               name="email"
               type="email"
               placeholder="Email"
@@ -29,11 +34,10 @@
             />
           </div>
           <div>
-            <label for="password">Password:</label>
+            <label for="password" class="input-label">Password:</label>
           </div>
           <div>
             <input
-             
               name="password"
               type="password"
               placeholder="Password"
@@ -49,11 +53,10 @@
       <form method="POST" action="/register">
         <div>
           <div>
-            <label for="full-name">Full Name:</label>
+            <label for="full-name" class="input-label">Full Name:</label>
           </div>
           <div>
             <input
-             
               name="fullName"
               type="full-name"
               placeholder="FirstName LastName"
@@ -61,11 +64,10 @@
             />
           </div>
           <div>
-            <label for="username">Username:</label>
+            <label for="username" class="input-label">Username:</label>
           </div>
           <div>
             <input
-             
               name="username"
               type="username"
               placeholder="Username"
@@ -73,11 +75,10 @@
             />
           </div>
           <div>
-            <label for="email">Email address:</label>
+            <label for="email" class="input-label">Email address:</label>
           </div>
           <div>
             <input
-             
               name="email"
               type="email"
               placeholder="email@litebay.org"
@@ -85,11 +86,10 @@
             />
           </div>
           <div>
-            <label for="password">Password:</label>
+            <label for="password" class="input-label">Password:</label>
           </div>
           <div>
             <input
-             
               name="password"
               type="password"
               placeholder="********"
