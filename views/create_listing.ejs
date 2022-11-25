@@ -5,49 +5,58 @@
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      
     />
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/home.css" />
+    <link rel="stylesheet" href="/styles/listings.css" />
 
     <title>Create New Listing</title>
   </head>
 
+
   <body>
     <%- include('partials/_header') %>
-    <main style="margin: 1em;">
-      <h2 class="ml-2"><b>Create Listing</b></h2>
-      <form action="/create-listing/" method="POST">
-        <div class="form-group mb-2 ml-2">
-            <label>Item</label><br>
+    <main style="margin: 1em;"><br><br>
+      <title>Create Listing</title>
+      <form action="/create-listing" method="POST"><br>
+        <div>
+            <label class="listing-input">Item</label><br>
             <input 
               class="form-control"
               type="text"
               name="listing"
               placeholder="Item"
               style="width: 450px"
-            /><br>
-            <label>Price</label><br>
+            /><br><br>
+            <label class="listing-input">Price</label><br>
             <input
               class="form-control"
               type="number"
               name="price"
               placeholder="$5"
               style="width: 450px"
-            /><br>
-            <label>Image URL</label><br>
+            /><br><br>
+            <label class="listing-input">Image URL</label><br>
             <input
               class="form-control"
               type="text"
               name="image_url"
               placeholder="https://picsum.photos/id/80/400/300"
               style="width: 450px"
-            /><br>
-            <label>Descripton</label><br>
+            /><br><br>
+            <label class="listing-input">Descripton</label><br>
             <input
               class="form-control"
               type="text"
               name="description"
               placeholder="Eggs"
               style="width: 450px; height: 250px"
-            /><br>
+            /><br><br>
           <button type="submit" class="btn btn-primary">List Item</button>
         </div>
       </form>
