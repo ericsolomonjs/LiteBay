@@ -1,21 +1,21 @@
 const loadHomeListings = () => {
 
-  $.get("/api/listings/featured/", (listings) => {})
-  .done((listings) => {
-    renderListings(listings, ".featured-listings-section");
-  }) 
-  
-  $.get("/api/listings/notfeatured/", (listings) => {})
-  .done((listings) => {
-    renderListings(listings, ".listings-section");
-  }) 
+  $.get("/api/listings/featured/", (listings) => { })
+    .done((listings) => {
+      renderListings(listings, ".featured-listings-section");
+    })
+
+  $.get("/api/listings/notfeatured/", (listings) => { })
+    .done((listings) => {
+      renderListings(listings, ".listings-section");
+    })
 }
 
 const loadFavouriteListings = () => {
-  $.get("/api/listings/favourite-listings/", (listings) => {})
-  .done((listings) => {
-    renderListings(listings, ".favourite-listings-section");
-  }) 
+  $.get("/api/listings/favourites/", (listings) => { })
+    .done((listings) => {
+      renderListings(listings, ".user-favorites");
+    })
 }
 
 const renderListings = (listings, target) => {
@@ -50,8 +50,30 @@ const renderListings = (listings, target) => {
             <!-- TARGET THE CLASS BELOW WITH POSTED x [unit of time] AGO -->
             <p class="posted-time">${timeString}</p>
             <p>$${listing.price}</p>
-          </div>
+            </div>
         </article>
     `);
   }
-}
+};
+
+
+///////////////////////////functions for user page load
+
+const loadUserProfile = () => {
+
+  //load user favorites then render
+  $.get("/api/user/", (user) => { })
+    .done((user) => {
+      renderUserProfile(user, "user-profile");
+    })
+};
+
+const renderUserProfile = (user, target) => {
+  $(target).append(`
+    <div>
+      <label class="user-username">${user.username}</label>
+      <label class="user-full-name">${user.fullname}</label>
+      <label class=""</label>
+    </div>
+  `);
+};
