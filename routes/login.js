@@ -14,7 +14,7 @@ const {
   getUserObjectWithID,
 } = require("../bin/helpers/userHelpers");
 
-// renders login page
+// renders login/register page
 router.get("/", (req, res) => {
   getUserObjectWithID(req.session.user_id)
     .then((loggedIn) => {
