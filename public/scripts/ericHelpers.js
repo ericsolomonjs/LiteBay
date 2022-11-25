@@ -18,16 +18,27 @@ const loadFavouriteListings = () => {
     })
 }
 
+const loadAdminListings = () => {
+  $.get("/api/listings/featured/", (listings) => { })
+    .done((listings) => {
+      renderListings(listings, ".admin-listings-section");
+    })
+
+  $.get("/api/listings/notfeatured/", (listings) => { })
+    .done((listings) => {
+      renderListings(listings, ".admin-listings-section");
+    })
+}
+
 const renderListings = (listings, target) => {
   for (let listing of listings["listings"]) {
     const timeSince = Date.now() - listing.date_added;
     const timeString = getTimeString(timeSince);
-    console.log(listing);
     $(target).append(`
     <article class=listing-article>
           <div>
             <!-- BUTTON POSTS TO FAVORITES DB OR IF EXISTS, DELETES FROM -->
-            <button type=submit buttonmethod="POST" buttonaction="/favourite/:post_id">
+            <button type=submit buttonmethod="POST" buttonaction="/favourite/${listing.id}">
               FAVOURITE
             </button>
             <img class="listing-img"
@@ -69,11 +80,11 @@ const loadUserProfile = () => {
 };
 
 const renderUserProfile = (user, target) => {
-  console.log(user);
   $(target).append(`
     <div>
-    <label class="username"> @${user.username}</Label>
-    <label class="fullname"> ${user.fullname}</Label>
+    <p>User Profile: </p>
+    <p class="username">Username : @${user["user"][0].username}</p>
+    <p class="fullname">Full name : ${user["user"][0].full_name}</p>
     </div>
   `);
 };
