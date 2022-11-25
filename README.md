@@ -68,6 +68,12 @@ http://localhost:8080/
 
 ![The landing page](images/home.png)
 
+* Login/Registration page
+
+An account is required to fully experience the excitement of buying your neighbour's old lawnmower. Whether you are a new or existing user, your next stop is a Login/Registration screen
+
+![Login & Registration](images/login-register.png)
+
 * Favourites page
 
 Once signed in, any user can add a listing to their favourites to easily access the listings they are interested in
