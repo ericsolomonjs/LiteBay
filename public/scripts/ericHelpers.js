@@ -64,16 +64,16 @@ const loadUserProfile = () => {
   //load user favorites then render
   $.get("/api/user/", (user) => { })
     .done((user) => {
-      renderUserProfile(user, "user-profile");
+      renderUserProfile(user, ".user-profile");
     })
 };
 
 const renderUserProfile = (user, target) => {
+  console.log(user);
   $(target).append(`
     <div>
-      <label class="user-username">${user.username}</label>
-      <label class="user-full-name">${user.fullname}</label>
-      <label class=""</label>
+    <label class="username"> @${user.username}</Label>
+    <label class="fullname"> ${user.fullname}</Label>
     </div>
   `);
 };
