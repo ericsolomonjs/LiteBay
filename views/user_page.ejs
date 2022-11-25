@@ -13,26 +13,42 @@
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
 
-  <script src="/vendor/jquery-3.0.0.js"></script>
-  <script defer src="/scripts/users.js"></script>
-  <script defer src="/scripts/pageBuilderHelper.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+  <script defer src="/scripts/loadUser.js"></script>
+  <script defer src="/scripts/getTimeString.js"></script>
+  <script defer src="/scripts/ericHelpers.js"></script>
+
 </head>
 
 <body>
-  <%- include('partials/_header.ejs') %>
-
-  <h1>User</h1>
-  <button id="fetch-users">Fetch Users via AJAX</button>
-  <ul id="users"></ul>
+<%- include('partials/_header.ejs') %>
+<!-- this class should be flex with columns to split these elements up on the page layout 
+but also with adaptive styling though -->
+<div class="user-profile"> 
 
   <div>
-    <profileText>
-      <!-- User's name-->>
-    </profileText>
-    <div>
-      <!-- Display listings-->
-    </div>
+    <img class="user-image" src="" alt="">
+    <label class="fullname"></Label>
+    <label class="userLocation"></label> <!--maybe just city and country? -->
   </div>
+  <div class="user-favorites">
+    <!-- POPULATE THIS WITH USER FAVORITES LISTINGS! -->
+
+  </div>
+</div>
+
+
+<div>
+  <profileText>
+    <!-- User's name-->
+  </profileText>
+  <div>
+    <!-- Display listings-->
+  </div>
+</div>
+
+
 </body>
 
 </html>
