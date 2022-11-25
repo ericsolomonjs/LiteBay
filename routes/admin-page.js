@@ -34,6 +34,11 @@ router.get("/", (req, res) => {
     });
 });
 
+router.post("/:id/marksold", (req, res) => {
+
+})
+
+
 // deletes specific listing
 router.post("/:id/delete", (req, res) => {
 

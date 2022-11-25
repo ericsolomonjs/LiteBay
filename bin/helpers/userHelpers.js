@@ -51,6 +51,23 @@ const getIsAdmin = (id) => {
     });
 };
 
+const setAdmin = (username) => {
+  const queryString = `
+    UPDATE users
+    SET is_admin = true
+    WHERE users.username = $1
+  `;
+
+  return pool
+    .query(queryString, [username])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+};
+
 // GET USER ID FUNCTIONS
 const getUserIDWithEmail = (email) => {
   const queryString = `
@@ -68,7 +85,6 @@ const getUserIDWithEmail = (email) => {
       return null;
     });
 };
-
 
 const getUserIDWithUsername = (username) => {
   const queryString = `
@@ -146,31 +162,46 @@ const displayUserInfo = (infoObject) => {
   ${infoObject.email}`);
 };
 
-const setAdmin = (username) => {
+const setFavourite = (userID, listingID) => {
   const queryString = `
-    UPDATE users
-    SET is_admin = true
-    WHERE users.username = $1
+    INSERT INTO favourites (user_id, listing_id)
+    VALUES ($1, $2)
+    RETURNING *;
   `;
+  const values = [userID, listingID];
 
   return pool
-    .query(queryString, [username])
+    .query(queryString, values)
     .then((result) => {
-      return result.rows;
+      console.log("resrow: ", result.rows[0])
+      return result.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
+      return null;
     });
 };
 
+const removeFavourite = (userID, listingID) => {
+  const queryString = `
+    DELETE FROM favourites (user_id, listing_id)
+    WHERE user_id = $1 AND listing_id = $2
+    RETURNING *;
+  `;
+  const values = [userID, listingID];
 
+  return pool
+    .query(queryString, values)
+    .then((result) => {
+      return result.rows[0];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return null;
+    });
+};
 
-
-//FIX
 const getFavourites = (id) => {
-  let favourites = null;
-
-  // FIX users.username, users.email to be sellers username and email
   const queryString = `
     SELECT users.username, users.email, listings.listing_title, listings.text, listings.price, listings.date_added, listings.sold, images.url, images.alt_text, favourites.id as favourite_id
     FROM favourites
@@ -183,20 +214,21 @@ const getFavourites = (id) => {
   pool.query(queryString, [id])
     .then((req, res) => {
       //has to return object of listings that are user favourites so currently wrong
-      favourites = res.rows;
+      return res.rows[0];
     });
-  return favourites;
 };
 
 module.exports = {
   addUser,
   getIsAdmin,
+  setAdmin,
   getUserIDWithEmail,
   getUserIDWithUsername,
   getUserObjectWithUsername,
   getUserObjectWithEmail,
   getUserObjectWithID,
   displayUserInfo,
+  setFavourite,
+  removeFavourite,
   getFavourites,
-  setAdmin
 };
