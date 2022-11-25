@@ -17,8 +17,6 @@ nav {
 
 .group-buttons {
   display: flex;
-  justify-content: right;
-  align-items: center;
   padding-top: 20px;
 }
 
@@ -31,7 +29,7 @@ a, button, li, ul {
 }
 
 .logo {
-  margin-top: 20px;
+  margin-top: 5px;
   margin-left: 50px;
   font-family: 'Jua', sans-serif;
   font-weight: 400;
@@ -43,8 +41,10 @@ a, button, li, ul {
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   padding: 25px 10%;
+}
+.align-header {
+  justify-content: space-between;
 }
 
 navButton {
