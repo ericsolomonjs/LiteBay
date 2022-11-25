@@ -16,7 +16,7 @@ router.use(cookieSession({
 }));
 
 router.get('/', (req, res) => {
-const loggedIn = req.session;
+const loggedIn = req.session.user_id;
 
 if (loggedIn) {
   res.render("user_page.ejs");
