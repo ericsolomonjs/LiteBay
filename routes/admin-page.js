@@ -27,7 +27,7 @@ router.get("/", (req, res) => {
       if (adminStatus) {
         return res.render("admin_page");
       }
-      return res.send("<p>Please log in to view your listing's.</p>");
+      return res.send("<p>You are not an admin.</p>");
     })
     .catch((error) => {
       console.log(error.message);

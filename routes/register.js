@@ -47,11 +47,15 @@ router.post("/", (req, res) => {
             email,
             hashedPassword: bcrypt.hashSync(password, 10),
             fullName
-          });
-
-          // sets cookies
-          req.session.user_id = getUserIDWithUsername(username);
-          return res.redirect('/');
+          })
+            .then((newUser) => {
+              // sets cookies
+              req.session.user_id = newUser.id
+              return res.redirect('/');
+            })
+            .catch((error) => {
+              console.log(error.message);
+            });
         })
         .catch((error) => {
           console.log(error.message);

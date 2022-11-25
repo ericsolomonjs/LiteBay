@@ -167,7 +167,7 @@ const setAdmin = (username) => {
 
 
 //FIX
-const getFavourites = (username) => {
+const getFavourites = (id) => {
   let favourites = null;
 
   // FIX users.username, users.email to be sellers username and email
@@ -177,10 +177,10 @@ const getFavourites = (username) => {
     JOIN users ON favourites.user_id = users.id
     JOIN listings ON favourites.listing_id = listings.id
     JOIN images ON listings.image_id = images.id
-    WHERE username = '$1'
+    WHERE favourites.user_id = $1;
   `;
 
-  pool.query(queryString, [username])
+  pool.query(queryString, [id])
     .then((req, res) => {
       //has to return object of listings that are user favourites so currently wrong
       favourites = res.rows;
