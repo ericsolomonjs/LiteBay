@@ -3,24 +3,25 @@
 
 <head>
 
-
   <link rel="stylesheet" href="/styles/nav.scss" />
   <link rel="stylesheet" href="/styles/main.scss" />
+  <link rel="stylesheet" href="styles/login.scss" />
+  
   <title>User Login</title>
 </head>
 
 <body>
   <%- include('partials/_header') %>
     <div>
-      <h2 class="ml-3 mt-3"><b>Login</b></h2>
+      <h2><b>Login</b></h2>
       <form method="POST" action="/login">
         <div>
           <div>
-            <label class="ml-3" for="email">Email address:</label>
+            <label for="email">Email address:</label>
           </div>
           <div>
             <input
-              class="ml-3"
+             
               name="email"
               type="email"
               placeholder="Email"
@@ -28,11 +29,11 @@
             />
           </div>
           <div>
-            <label class="ml-3 mt-3" for="password">Password:</label>
+            <label for="password">Password:</label>
           </div>
           <div>
             <input
-              class="ml-3"
+             
               name="password"
               type="password"
               placeholder="Password"
@@ -40,19 +41,19 @@
             />
           </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-sm ml-3 mt-3">Login</button>
+        <button class="button" type="submit">Login</button>
       </form>
     </div>
     <div>
-      <h2 class="ml-3 mt-5"><b>Register Account</b></h2>
+      <h2><b>Register Account</b></h2>
       <form method="POST" action="/register">
         <div>
           <div>
-            <label class="ml-3 mt-3" for="full-name">Full Name:</label>
+            <label for="full-name">Full Name:</label>
           </div>
           <div>
             <input
-              class="ml-3"
+             
               name="fullName"
               type="full-name"
               placeholder="FirstName LastName"
@@ -60,11 +61,11 @@
             />
           </div>
           <div>
-            <label class="ml-3" for="username">Username:</label>
+            <label for="username">Username:</label>
           </div>
           <div>
             <input
-              class="ml-3"
+             
               name="username"
               type="username"
               placeholder="Username"
@@ -72,11 +73,11 @@
             />
           </div>
           <div>
-            <label class="ml-3" for="email">Email address:</label>
+            <label for="email">Email address:</label>
           </div>
           <div>
             <input
-              class="ml-3"
+             
               name="email"
               type="email"
               placeholder="email@litebay.org"
@@ -84,11 +85,11 @@
             />
           </div>
           <div>
-            <label class="ml-3 mt-3" for="password">Password:</label>
+            <label for="password">Password:</label>
           </div>
           <div>
             <input
-              class="ml-3"
+             
               name="password"
               type="password"
               placeholder="********"
@@ -96,10 +97,9 @@
             />
           </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-sm ml-3 mt-3">Register</button>
+        <button class="button" type="submit">Register</button>
       </form>
     </div>
-    <!-- Bootstrap JS -->
 </body>
 
 </html>
