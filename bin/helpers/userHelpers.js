@@ -1,6 +1,6 @@
 const db = require('../../db/connection');
 
-// ADD A USER
+// function adds a user to the database
 const addUser = (user) => {
   const queryString = `
   INSERT INTO users (username, email, hashed_password, full_name)
@@ -14,10 +14,9 @@ const addUser = (user) => {
     user.fullName,
   ];
 
-  return db
-    .query(queryString, values)
-    .then((result) => {
-      return result.rows[0];
+  return db.query(queryString, values)
+    .then((userObject) => {
+      return userObject.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
@@ -25,7 +24,7 @@ const addUser = (user) => {
     });
 };
 
-// DETERMINE USER ADMIN STATUS
+// admin authenticator
 const getIsAdmin = (id) => {
   const queryString = `
     SELECT is_admin
@@ -34,8 +33,8 @@ const getIsAdmin = (id) => {
   `;
 
   return db.query(queryString, [id])
-    .then((result) => {
-      return result.rows[0].is_admin;
+    .then((adminStatus) => {
+      return adminStatus.rows[0].is_admin;
     })
     .catch((error) => {
       console.log(error.message);
@@ -43,24 +42,25 @@ const getIsAdmin = (id) => {
     });
 };
 
+// no longer required after project requirements were explained
 const setAdmin = (username) => {
   const queryString = `
     UPDATE users
     SET is_admin = true
     WHERE users.username = $1
+    RETURNING *;
   `;
 
-  return db
-    .query(queryString, [username])
-    .then((result) => {
-      return result.rows;
+  return db.query(queryString, [username])
+    .then((userObject) => {
+      return userObject.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
     });
 };
 
-// GET USER ID FUNCTIONS
+// no longer required after project requirements were explained
 const getUserIDWithEmail = (email) => {
   const queryString = `
     SELECT id
@@ -69,8 +69,8 @@ const getUserIDWithEmail = (email) => {
   `;
 
   return db.query(queryString, [email])
-    .then((result) => {
-      return result.rows[0].id;
+    .then((userObject) => {
+      return userObject.rows[0].id;
     })
     .catch((error) => {
       console.log(error.message);
@@ -78,6 +78,7 @@ const getUserIDWithEmail = (email) => {
     });
 };
 
+// no longer required after project requirements were explained
 const getUserIDWithUsername = (username) => {
   const queryString = `
     SELECT id
@@ -86,8 +87,8 @@ const getUserIDWithUsername = (username) => {
   `;
 
   return db.query(queryString, [username])
-    .then((result) => {
-      return result.rows[0].id;
+    .then((userObject) => {
+      return userObject.rows[0].id;
     })
     .catch((error) => {
       console.log(error.message);
@@ -95,7 +96,6 @@ const getUserIDWithUsername = (username) => {
     });
 };
 
-// GET USER OBJECT FUNCTIONS
 const getUserObjectWithUsername = (username) => {
   const queryString = `
     SELECT *
@@ -104,8 +104,8 @@ const getUserObjectWithUsername = (username) => {
   `;
 
   return db.query(queryString, [username])
-    .then((result) => {
-      return result.rows[0];
+    .then((userObject) => {
+      return userObject.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
@@ -121,8 +121,8 @@ const getUserObjectWithEmail = (email) => {
   `;
 
   return db.query(queryString, [email])
-    .then((result) => {
-      return result.rows[0];
+    .then((userObject) => {
+      return userObject.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
@@ -138,20 +138,13 @@ const getUserObjectWithID = (id) => {
   `;
 
   return db.query(queryString, [id])
-    .then((result) => {
-      return result.rows[0];
+    .then((userObject) => {
+      return userObject.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
       return null;
     });
-};
-
-const displayUserInfo = (infoObject) => {
-  //add user data to page HTML
-  $("div.user-info-section").prepend(`
-  ${infoObject.username},
-  ${infoObject.email}`);
 };
 
 const checkFavourite = (userID, listingID) => {
@@ -164,18 +157,16 @@ const checkFavourite = (userID, listingID) => {
   `;
   const values = [userID, listingID];
 
-  return db
-    .query(queryString, values)
-    .then((result) => {
-      console.log('checkfav: ', result.rows[0])
-      return result.rows[0];
+  return db.query(queryString, values)
+    .then((favouriteObject) => {
+      return favouriteObject.rows[0];
 
     })
     .catch((error) => {
       console.log(error.message);
       return null;
     });
-}
+};
 
 const setFavourite = (userID, listingID) => {
   const queryString = `
@@ -185,10 +176,9 @@ const setFavourite = (userID, listingID) => {
   `;
   const values = [userID, listingID];
 
-  return db
-    .query(queryString, values)
-    .then((result) => {
-      return result.rows[0];
+  return db.query(queryString, values)
+    .then((favouriteObject) => {
+      return favouriteObject.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
@@ -196,6 +186,7 @@ const setFavourite = (userID, listingID) => {
     });
 };
 
+// not within project scope, but will use it when adding more functionality
 const removeFavourite = (userID, listingID) => {
   const queryString = `
     DELETE FROM favourites (user_id, listing_id)
@@ -204,14 +195,12 @@ const removeFavourite = (userID, listingID) => {
   `;
   const values = [userID, listingID];
 
-  return db
-    .query(queryString, values)
-    .then((result) => {
-      return result.rows[0];
+  return db.query(queryString, values)
+    .then((favouriteObject) => {
+      return favouriteObject.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
-      return null;
     });
 };
 
@@ -226,9 +215,12 @@ const getFavourites = (id) => {
   `;
 
   db.query(queryString, [id])
-    .then((req, res) => {
-      //has to return object of listings that are user favourites so currently wrong
-      return res.rows[0];
+    .then((favouriteListingsObject) => {
+      return favouriteListingsObject.rows[0];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return null;
     });
 };
 
@@ -238,10 +230,9 @@ module.exports = {
   setAdmin,
   getUserIDWithEmail,
   getUserIDWithUsername,
-  getUserObjectWithUsername,
   getUserObjectWithEmail,
+  getUserObjectWithUsername,
   getUserObjectWithID,
-  displayUserInfo,
   checkFavourite,
   setFavourite,
   removeFavourite,
