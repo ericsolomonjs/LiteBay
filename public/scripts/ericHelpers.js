@@ -34,35 +34,39 @@ const renderListings = (listings, target) => {
   for (let listing of listings["listings"]) {
     const timeSince = Date.now() - listing.date_added;
     const timeString = getTimeString(timeSince);
+    console.log(listing);
     $(target).append(`
     <article class=listing-article>
-          <div>
-            <!-- BUTTON POSTS TO FAVORITES DB OR IF EXISTS, DELETES FROM -->
-            <form method="POST" action="/favourite/${listing.id}">
+        <div>
+          <!-- BUTTON POSTS TO FAVORITES DB OR IF EXISTS, DELETES FROM -->
+          <form method="POST" action="/favourite/${listing.id}">
               <button type="submit">Favourite</button>
             </form>
-            <img class="listing-img"
-              src="${listing.url}"
-              alt="${listing.alt_text}" width="70%">
+          <img class="listing-img"
+            src="${listing.url}"
+            alt="${listing.alt_text}" width="70%">
+        </div>
+        <div>
+          <!-- TARGET THE CLASS BELOW FOR LISTING TEXT! -->
+          <p class="listing-title">${listing.listing_title} </p>
+          <p class="listing-text">
+          ${listing.text}
+          </p>
+
+          <!-- TARGET THE CLASS BELOW FOR LISTING in IMAGE! -->
           </div>
           <div>
-            <!-- TARGET THE CLASS BELOW FOR LISTING TEXT! -->
-            <p>${listing.listing_title} </p>
-            <p class=listing-text>
-              ${listing.text}
-            </p>
-            <!-- TARGET THE CLASS BELOW FOR LISTING in IMAGE! -->
-            </div>
-          <div>
-            <!-- TARGET THE CLASS BELOW FOR USER -->
-            <p class="posted-by">
-              Posted by : ${listing.username}
-            </p>
-            <!-- TARGET THE CLASS BELOW WITH POSTED x [unit of time] AGO -->
-            <p class="posted-time">${timeString}</p>
-            <p>$${listing.price}</p>
-            </div>
-        </article>
+          <!-- TARGET THE CLASS BELOW FOR USER -->
+          <p class="posted-by">
+            Seller: ${listing.username}
+          </p>
+          <p class="cost">$${listing.price}</p>
+          <!-- TARGET THE CLASS BELOW WITH POSTED x [unit of time] AGO -->
+          <p class="posted-time">${timeString}</p>
+
+
+          </div>
+      </article>
     `);
   }
 };
@@ -73,9 +77,9 @@ const renderAdminListings = (listings, target) => {
     const timeString = getTimeString(timeSince);
     $(target).append(`
     <article class=listing-article>
-          <div>
-            <!-- BUTTON POSTS TO FAVORITES DB OR IF EXISTS, DELETES FROM -->
-            <form method="POST" action="/favourite/${listing.id}">
+        <div>
+          <!-- BUTTON POSTS TO FAVORITES DB OR IF EXISTS, DELETES FROM -->
+          <form method="POST" action="/favourite/${listing.id}">
               <button type="submit">Favourite</button>
             </form>
             <form method="POST" action="/admin/${listing.id}/marksold">
@@ -86,28 +90,31 @@ const renderAdminListings = (listings, target) => {
             </form>
           </div>
           <div>
-            <img class="listing-img"
-              src="${listing.url}"
-              alt="${listing.alt_text}" width="70%">
+          <img class="listing-img"
+            src="${listing.url}"
+            alt="${listing.alt_text}" width="70%">
+        </div>
+        <div>
+          <!-- TARGET THE CLASS BELOW FOR LISTING TEXT! -->
+          <p class="listing-title">${listing.listing_title} </p>
+          <p class="listing-text">
+          ${listing.text}
+          </p>
+
+          <!-- TARGET THE CLASS BELOW FOR LISTING in IMAGE! -->
           </div>
           <div>
-            <!-- TARGET THE CLASS BELOW FOR LISTING TEXT! -->
-            <p>${listing.listing_title} </p>
-            <p class=listing-text>
-              ${listing.text}
-            </p>
-            <!-- TARGET THE CLASS BELOW FOR LISTING in IMAGE! -->
-            </div>
-          <div>
-            <!-- TARGET THE CLASS BELOW FOR USER -->
-            <p class="posted-by">
-              Posted by : ${listing.username}
-            </p>
-            <!-- TARGET THE CLASS BELOW WITH POSTED x [unit of time] AGO -->
-            <p class="posted-time">${timeString}</p>
-            <p>$${listing.price}</p>
-            </div>
-        </article>
+          <!-- TARGET THE CLASS BELOW FOR USER -->
+          <p class="posted-by">
+            Seller: ${listing.username}
+          </p>
+          <p class="cost">$${listing.price}</p>
+          <!-- TARGET THE CLASS BELOW WITH POSTED x [unit of time] AGO -->
+          <p class="posted-time">${timeString}</p>
+
+
+          </div>
+      </article>
     `);
   }
 };
