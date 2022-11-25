@@ -78,12 +78,14 @@ const renderAdminListings = (listings, target) => {
             <form method="POST" action="/favourite/${listing.id}">
               <button type="submit">Favourite</button>
             </form>
-            <form method="POST" action="/marksold/${listing.id}">
+            <form method="POST" action="/admin/${listing.id}/marksold">
             <button type="submit">Mark Sold</button>
             </form>
-            <form method="POST" action="/delete/${listing.id}">
+            <form method="POST" action="/admin/${listing.id}/delete">
               <button type="submit">DELETE!</button>
             </form>
+          </div>
+          <div>
             <img class="listing-img"
               src="${listing.url}"
               alt="${listing.alt_text}" width="70%">
