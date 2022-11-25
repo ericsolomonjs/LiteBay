@@ -23,11 +23,12 @@ const getNotFeatured = async () => {
 };
 
 //fix get favourites here
-const getFavourites = async (username) => {
+const getFavourites = async (userID) => {
   const data = await db.query(`SELECT * FROM listings 
   JOIN favourites ON listings.id=favourites.listing_id 
   JOIN users ON favourites.user_id=users.id
-  WHERE username = ${username};`);
+  JOIN images ON images.id = listings.image_id
+  WHERE users.id = ${userID};`);
   return data.rows;
 };
 
