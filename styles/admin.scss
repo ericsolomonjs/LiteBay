@@ -1,0 +1,55 @@
+.user-page {
+  margin-top:75px;
+  padding:20px;
+  display:flex;
+  flex-direction:row;
+  align-items: flex-start;
+  padding:0.5em;
+  width: 65%;
+}
+
+.user-profile {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin:1em;;
+  width: 50%;
+  font-size: small;
+  margin:5%;
+  
+}
+.user-profile label {
+  display:contents;
+  font-size: 20pt;
+}
+
+.filters-section {
+  display: flex;
+  flex-direction: column;
+  margin:2em;;
+  width:35%;
+}
+
+.filters-section button {
+  margin: 10px;
+  width:100px;
+}
+
+.listing-article {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0.4em;
+}
+
+.listing-article div {
+  width:30%;
+}
+.listing-article button {
+  margin: 0.4em;
+}
+
+title {
+  display:contents;
+  font-size: 20pt;
+}
