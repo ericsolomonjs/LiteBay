@@ -63,7 +63,7 @@ const renderListings = (listings, target) => {
           <p class="cost">$${listing.price}</p>
           <!-- TARGET THE CLASS BELOW WITH POSTED x [unit of time] AGO -->
           <p class="posted-time">${timeString}</p>
-
+          <a class="email-button" href="mailto:${listing.email}?subject=Regarding ${listing.listing_title}">Email Us</a>
 
           </div>
       </article>
@@ -127,7 +127,7 @@ const renderAdminListings = (listings, target) => {
           <p class="cost">$${listing.price}</p>
           <!-- TARGET THE CLASS BELOW WITH POSTED x [unit of time] AGO -->
           <p class="posted-time">${timeString}</p>
-
+          <a class="email-button" href="mailto:${listing.email}?subject=Regarding ${listing.listing_title}">Email Us</a>
 
           </div>
       </article>
