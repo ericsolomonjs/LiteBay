@@ -4,14 +4,15 @@
 <head>
   <title>Users</title>
 
-  <meta charset="UTF-8" >
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/user.css" />
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
@@ -22,32 +23,27 @@
 </head>
 
 <body>
-<%- include('partials/_header.ejs') %>
-<!-- this class should be flex with columns to split these elements up on the page layout 
+  <%- include('partials/_header.ejs') %>
+    <!-- this class should be flex with columns to split these elements up on the page layout 
 but also with adaptive styling though -->
-<div class="user-profile"> 
+    <div class="user-page">
+      <div class="user-profile">
+      
+      </div>
+      <div class="user-favorites">
+        <!-- POPULATE THIS WITH USER FAVORITES LISTINGS! -->
 
-  <div>
-    <img class="user-image" src="" alt="">
-    <label class="fullname"></Label>
-    <label class="userLocation"></label> <!--maybe just city and country? -->
-  </div>
-  <div class="user-favorites">
-    <!-- POPULATE THIS WITH USER FAVORITES LISTINGS! -->
+      </div>
 
-  </div>
-</div>
-
-
-<div>
-  <profileText>
-    <!-- User's name-->
-  </profileText>
-  <div>
-    <!-- Display listings-->
-  </div>
-</div>
-
+      <div>
+        <profileText>
+          <!-- User's name-->
+        </profileText>
+        <div>
+          <!-- Display listings-->
+        </div>
+      </div>
+    </div>
 
 </body>
 
