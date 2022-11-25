@@ -1,12 +1,4 @@
-// const db = require('../../db/connection');
-const { Pool } = require("pg");
-
-const pool = new Pool({
-  user: 'labber',
-  password: 'labber',
-  host: 'localhost',
-  database: 'midterm'
-});
+const db = require('../../db/connection');
 
 // ADD A USER
 const addUser = (user) => {
@@ -22,7 +14,7 @@ const addUser = (user) => {
     user.fullName,
   ];
 
-  return pool
+  return db
     .query(queryString, values)
     .then((result) => {
       return result.rows[0];
@@ -41,7 +33,7 @@ const getIsAdmin = (id) => {
     WHERE id = $1;
   `;
 
-  return pool.query(queryString, [id])
+  return db.query(queryString, [id])
     .then((result) => {
       return result.rows[0].is_admin;
     })
@@ -58,7 +50,7 @@ const setAdmin = (username) => {
     WHERE users.username = $1
   `;
 
-  return pool
+  return db
     .query(queryString, [username])
     .then((result) => {
       return result.rows;
@@ -76,7 +68,7 @@ const getUserIDWithEmail = (email) => {
     WHERE email = $1;
   `;
 
-  return pool.query(queryString, [email])
+  return db.query(queryString, [email])
     .then((result) => {
       return result.rows[0].id;
     })
@@ -93,7 +85,7 @@ const getUserIDWithUsername = (username) => {
     WHERE username = $1;
   `;
 
-  return pool.query(queryString, [username])
+  return db.query(queryString, [username])
     .then((result) => {
       return result.rows[0].id;
     })
@@ -111,7 +103,7 @@ const getUserObjectWithUsername = (username) => {
     WHERE username = $1;
   `;
 
-  return pool.query(queryString, [username])
+  return db.query(queryString, [username])
     .then((result) => {
       return result.rows[0];
     })
@@ -128,7 +120,7 @@ const getUserObjectWithEmail = (email) => {
     WHERE email = $1;
   `;
 
-  return pool.query(queryString, [email])
+  return db.query(queryString, [email])
     .then((result) => {
       return result.rows[0];
     })
@@ -145,7 +137,7 @@ const getUserObjectWithID = (id) => {
     WHERE id = $1
   `;
 
-  return pool.query(queryString, [id])
+  return db.query(queryString, [id])
     .then((result) => {
       return result.rows[0];
     })
@@ -162,6 +154,29 @@ const displayUserInfo = (infoObject) => {
   ${infoObject.email}`);
 };
 
+const checkFavourite = (userID, listingID) => {
+  const queryString = `
+    SELECT favourites.id
+    FROM favourites
+    JOIN listings ON listings.id = favourites.listing_id
+    JOIN users ON users.id = favourites.user_id
+    WHERE favourites.user_id = $1 AND favourites.listing_id = $2;
+  `;
+  const values = [userID, listingID];
+
+  return db
+    .query(queryString, values)
+    .then((result) => {
+      console.log('checkfav: ', result.rows[0])
+      return result.rows[0];
+
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return null;
+    });
+}
+
 const setFavourite = (userID, listingID) => {
   const queryString = `
     INSERT INTO favourites (user_id, listing_id)
@@ -170,10 +185,9 @@ const setFavourite = (userID, listingID) => {
   `;
   const values = [userID, listingID];
 
-  return pool
+  return db
     .query(queryString, values)
     .then((result) => {
-      console.log("resrow: ", result.rows[0])
       return result.rows[0];
     })
     .catch((error) => {
@@ -190,7 +204,7 @@ const removeFavourite = (userID, listingID) => {
   `;
   const values = [userID, listingID];
 
-  return pool
+  return db
     .query(queryString, values)
     .then((result) => {
       return result.rows[0];
@@ -211,7 +225,7 @@ const getFavourites = (id) => {
     WHERE favourites.user_id = $1;
   `;
 
-  pool.query(queryString, [id])
+  db.query(queryString, [id])
     .then((req, res) => {
       //has to return object of listings that are user favourites so currently wrong
       return res.rows[0];
@@ -228,7 +242,8 @@ module.exports = {
   getUserObjectWithEmail,
   getUserObjectWithID,
   displayUserInfo,
+  checkFavourite,
   setFavourite,
   removeFavourite,
-  getFavourites,
+  getFavourites
 };
