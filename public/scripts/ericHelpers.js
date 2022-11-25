@@ -30,9 +30,28 @@ const loadAdminListings = () => {
     });
 };
 
+const loadFiltered20Listings = () => {
+  $.get("/filters/20/", (listings) => { })
+    .done((listings) => {
+      renderListings(listings, ".featured-listings-section");
+    });
+
+}
+
+const loadFiltered50Listings = () => {
+  $.get("/filters/50/", (listings) => { })
+    .done((listings) => {
+      renderListings(listings, ".featured-listings-section");
+    });
+
+ }
+
 const renderListings = (listings, target) => {
+  $(target).empty();
   for (let listing of listings["listings"]) {
-    const timeSince = Date.now() - listing.date_added;
+    let dateSections = listing.date_added.split("-");
+    var javascriptDate = new Date(dateSections[0], dateSections[1] - 1, dateSections[2].substr(0,2));
+    const timeSince = Date.now() - javascriptDate;
     const timeString = getTimeString(timeSince);
     console.log(listing);
     $(target).append(`
@@ -135,7 +154,7 @@ const renderAdminListings = (listings, target) => {
   }
 };
 
-///////////////////////////functions for user page load
+/////////////////////////// functions for user page load
 
 const loadUserProfile = () => {
 
@@ -146,12 +165,6 @@ const loadUserProfile = () => {
     });
 };
 
-const renderUserProfile = (user, target) => {
-  // $(target).append(`
-  //   <div>
-  //   <p>User Profile: </p>
-  //   <p class="username">Username : @${user["user"][0].username}</p>
-  //   <p class="fullname">Full name : ${user["user"][0].full_name}</p>
-  //   </div>
-  // `);
-};
+//////////////////////// functions for filters
+
+
