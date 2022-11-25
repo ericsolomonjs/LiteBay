@@ -36,7 +36,7 @@ const renderListings = (listings, target) => {
     const timeString = getTimeString(timeSince);
     console.log(listing);
     $(target).append(`
-    <article class=listing-article>
+    <article class="listing-article">
         <div>
           <!-- BUTTON POSTS TO FAVORITES DB OR IF EXISTS, DELETES FROM -->
           <button type=submit buttonmethod="POST" buttonaction="/favourite/:post_id">
@@ -76,7 +76,20 @@ const renderAdminListings = (listings, target) => {
     const timeSince = Date.now() - listing.date_added;
     const timeString = getTimeString(timeSince);
     $(target).append(`
-    <article class=listing-article>
+    <style>
+    button {
+      width: 150px;
+      background-color: #8899FF;
+      border: none;
+      color: #333333;
+      padding: 5px;
+      text-align: center;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+    </style>
+    <br><br><br><br><br>
+    <article class="listing-article">
         <div>
           <!-- BUTTON POSTS TO FAVORITES DB OR IF EXISTS, DELETES FROM -->
           <form method="POST" action="/favourite/${listing.id}">

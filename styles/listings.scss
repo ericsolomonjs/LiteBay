@@ -52,24 +52,18 @@
   justify-content: space-between;
 }
 
-messageButton {
-  margin: 0px 10px 0px 10px;
-  padding: 10px 10px;
-  background-color: rgba(94,114,197,1);
+button {
+  width: 150px;
+  background-color: #8899FF;
   border: none;
-  border-radius: 3px;
+  color: #8899AF;
+  padding: 5px;
+  text-align: center;
   cursor: pointer;
-  transition: all 0.3s ease 0s;
+  border-radius: 10px;
+  
 }
 
-messageButton:hover {
-  background-color: rgba(114,134,217,0.2);
-}
-
-iconInactive {
-  color: #404040;
-}
-
-iconActive{
-  color: #22188F;
+button:hover {
+  background-color: #9BABCB;
 }
