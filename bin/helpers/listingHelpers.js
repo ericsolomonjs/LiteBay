@@ -60,17 +60,17 @@ const getListingWithID = (listingID) => {
   `;
 
   return pool.query(queryString, [listingID])
-  .then((result) => {
-    return result.rows[0];
-  })
-  .catch((error) => {
-    console.log(error.message);
-  });
+    .then((result) => {
+      return result.rows[0];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return null;
+    });
 };
 
 const getListingsWithUsername = (username) => {
 
-  // use SELECT * if this is not efficient.
   const queryString = `
     SELECT users.username, users.email, listings.listing_title, listings.text, listings.price, listings.date_added, images.id as image_id, images.alt_text
     FROM listings
@@ -80,10 +80,8 @@ const getListingsWithUsername = (username) => {
   `;
 
   return pool.query(queryString, [username])
-    .then(result => {
-      result.rows.forEach((result) => {
-        return result;
-      });
+    .then((result) => {
+      return result.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
@@ -100,20 +98,13 @@ const getListingsWithUserID = (userID) => {
   `;
 
   return pool.query(queryString, [userID])
-    .then(res => {
-      res.rows.forEach(listing => {
-        return {
-          listingID: listing.id,
-          imageID: listing.image_id,
-          listingText: listing.text,
-          listingPrice: listing.price,
-          userID: listing.user_id,
-          featured: listing.featured,
-          sold: listing.sold,
-          dateAdded: listing.date_added
-        };
-      });
-    }).catch(err => console.error('query error', err.stack));
+    .then((result) => {
+      return result.rows[0];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return null;
+    });
 };
 
 const getHtmlListingCard = (listingObject) => {
@@ -160,22 +151,12 @@ const getFeaturedListings = () => {
   `;
 
   return pool.query(queryString)
-    .then(res => {
-      res.rows.forEach(listing => {
-        return {
-          listingID: listing.id,
-          imageID: listing.image_id,
-          listingText: listing.text,
-          listingPrice: listing.price,
-          userID: listing.user_id,
-          featured: listing.featured,
-          sold: listing.sold,
-          dateAdded: listing.date_added
-        };
-      });
+    .then((result) => {
+      return result.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
+      return null;
     });
 };
 
@@ -187,39 +168,31 @@ const getFilteredListings = (price) => {
   `;
 
   return pool.query(queryString, [price])
-    .then(res => {
-      res.rows.forEach(listing => {
-        return {
-          listingID: listing.id,
-          imageID: listing.image_id,
-          listingText: listing.text,
-          listingPrice: listing.price,
-          userID: listing.user_id,
-          featured: listing.featured,
-          sold: listing.sold,
-          dateAdded: listing.date_added
-        };
-      });
+    .then((result) => {
+      return result.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
+      return null;
     });
 };
 
 const setListingSold = (id) => {
   const queryString = `
     UPDATE listings
-    SET listings.sold = true
-    WHERE listings.id = $1
+    SET sold = true
+    WHERE id = $1
+    RETURNING *;
   `;
 
   return pool
     .query(queryString, [id])
     .then((result) => {
-      return result.rows;
+      return result.rows[0];
     })
     .catch((error) => {
       console.log(error.message);
+      return null;
     });
 };
 

@@ -17,6 +17,7 @@ const {
 const {
   deleteListing,
   getListingWithID,
+  setListingSold,
 } = require("../bin/helpers/listingHelpers");
 
 // renders admin page
@@ -35,9 +36,25 @@ router.get("/", (req, res) => {
 });
 
 router.post("/:id/marksold", (req, res) => {
+  getIsAdmin(req.session.user_id)
+    .then((adminStatus) => {
+      if (!adminStatus) {
+        return res.send("<p>You are not an admin.</p>");
+      }
 
-})
-
+      console.log("req:", req.params.id)
+      setListingSold(req.params.id)
+        .then(() => {
+          return res.redirect(req.get('referer'));
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+});
 
 // deletes specific listing
 router.post("/:id/delete", (req, res) => {
