@@ -147,11 +147,11 @@ const loadUserProfile = () => {
 };
 
 const renderUserProfile = (user, target) => {
-  $(target).append(`
-    <div>
-    <p>User Profile: </p>
-    <p class="username">Username : @${user["user"][0].username}</p>
-    <p class="fullname">Full name : ${user["user"][0].full_name}</p>
-    </div>
-  `);
+  // $(target).append(`
+  //   <div>
+  //   <p>User Profile: </p>
+  //   <p class="username">Username : @${user["user"][0].username}</p>
+  //   <p class="fullname">Full name : ${user["user"][0].full_name}</p>
+  //   </div>
+  // `);
 };
