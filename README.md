@@ -92,7 +92,7 @@ Attached here is an Entity Relationship diagram used when designing the database
 
 ## Collaborators
 
-The Litebay project was put together by a team of 3 web development students from Lighthouse Labs
+The Litebay project was put together by a team of 3 web development students at [Lighthouse Labs](https://www.lighthouselabs.ca/)
 
 - [Eric Solomon](https://github.com/facelessagony)
 - [Sid Natarajan](https://github.com/sidnat)
