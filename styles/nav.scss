@@ -4,7 +4,7 @@
 nav {
   position: fixed;
   display: flex;
-  height: 200px;
+  height: 80px;
   width: 100%;
   vertical-align: top;
   top: 0;
@@ -15,7 +15,14 @@ nav {
   background-color: #22188F;
 }
 
-li, a, button {
+.group-buttons {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding-top: 20px;
+}
+
+a, button, li, ul {
   font-family: 'Quicksand', sans-serif;
   font-weight: 400;
   font-size: 16px;
@@ -24,6 +31,8 @@ li, a, button {
 }
 
 .logo {
+  margin-top: 20px;
+  margin-left: 50px;
   font-family: 'Jua', sans-serif;
   font-weight: 400;
   font-size: 28px;
@@ -31,7 +40,7 @@ li, a, button {
   text-decoration: none;
 }
 
-header {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -53,6 +62,6 @@ loginButton {
   transition: all 0.3s ease 0s;
 }
 
-login:hover {
+loginButton:hover {
   background-color: rgba(114,134,217,0.2);
 }

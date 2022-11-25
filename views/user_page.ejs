@@ -15,17 +15,24 @@
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/users.js"></script>
+  <script defer src="/scripts/pageBuilderHelper.js"></script>
 </head>
 
 <body>
+  <%- include('partials/_header.ejs') %>
 
-// LOOK AT FIGMA TO GET A SENSE OF USERS PAGE
-
-// ADD FIGMA LAYOUT HERE
-
-  <h1>Users</h1>
+  <h1>User</h1>
   <button id="fetch-users">Fetch Users via AJAX</button>
   <ul id="users"></ul>
+
+  <div>
+    <profileText>
+      <!-- User's name-->>
+    </profileText>
+    <div>
+      <!-- Display listings-->
+    </div>
+  </div>
 </body>
 
 </html>

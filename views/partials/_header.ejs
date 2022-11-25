@@ -1,16 +1,26 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Navbar</title>
+  <meta name="description" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles/nav.css">
+</head>
+
+
 <header>
-  <nav class="navbar navbar-expand-md navbar-dark bg-success">
-    <a class="navbar-brand" href="/">LiteBay</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation" <span
-      class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <!-- CHANGE /URLS "MY PROFILE"... the route in serverroutework/user-page.js -->
-        <a class="nav-item nav-link" id="navButton" href="/user"><navButton>My Profile</navButton></a>
-        <a class="nav-item nav-link" id="navButton" href="/admin"><navButton>Admin</navButton></a>
-        <a class="nav-item nav-link" href="/login"><loginButton>Log in/Register</loginButton></a>
+  <nav>
+    <a class="logo" alt="logo" href="/">LiteBay</a>
+    <div>
+      <div class="group-buttons">
+        <div class="navbar-nav">
+          <!-- CHANGE /URLS "MY PROFILE"... the route in serverroutework/user-page.js -->
+          <a class="nav-item nav-link" id="navButton" href="/user"><navButton>My Profile</navButton></a>
+          <a class="nav-item nav-link" id="navButton" href="/admin"><navButton>Admin</navButton></a>
+          <a class="nav-item nav-link" id="navButton" href="/create-listing"><navButton>Create Listing</navButton></a>
+          <a class="nav-item nav-link" href="/login"><loginButton>Log in/Register</loginButton></a>
+          <a class="nav-item nav-link" href="/logout"><loginButton>Log out</loginButton></a>
+        </div>
       </div>
     </div>
   </nav>
