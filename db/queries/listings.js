@@ -32,9 +32,26 @@ const getFavourites = async (userID) => {
   return data.rows;
 };
 
+const getFiltered20Listings = async () => {
+  const data = await db.query(`SELECT * FROM listings 
+  JOIN users ON listings.user_id=users.id
+  JOIN images ON images.id = listings.image_id
+  WHERE listings.price < 20;`);
+  return data.rows;
+}
+const getFiltered50Listings = async () => {
+  const data = await db.query(`SELECT * FROM listings 
+  JOIN users ON listings.user_id=users.id
+  JOIN images ON images.id = listings.image_id
+  WHERE listings.price < 50;`);
+  return data.rows;
+}
+
 module.exports = {
   getListings,
   getFeatured,
   getNotFeatured,
-  getFavourites
+  getFavourites,
+  getFiltered20Listings,
+  getFiltered50Listings
 };

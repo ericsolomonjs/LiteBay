@@ -7,19 +7,24 @@
 
 const express = require('express');
 const router  = express.Router();
-const userQueries = require('../db/queries/user');
-const cookieSession = require("cookie-session");
+const listingQueries = require('../db/queries/listings');
 
-router.use(cookieSession({
-  name: "session",
-  keys: ["fdj3i42o2k3ggdger644212"],
-  maxAge: 24 * 60 * 60 * 1000
-}));
+router.get('/20', (req, res) => {
+  listingQueries.getFiltered20Listings()
+    .then(listings => {
+      res.json({ listings });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+});
 
-router.get('/', (req, res) => {
-  userQueries.getThisUserById(req.session.user_id)
-    .then(user => {
-      res.json({ user });
+router.get('/50', (req, res) => {
+  listingQueries.getFiltered50Listings()
+    .then(listings => {
+      res.json({ listings });
     })
     .catch(err => {
       res

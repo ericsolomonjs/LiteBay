@@ -28,18 +28,16 @@
   <script defer src="/scripts/ericHelpers.js"></script>
   <script defer src="/scripts/getTimeString.js"></script>
 
-
-
 </head>
 
 <body>
   <%- include('partials/_header.ejs') %>
     <div class="home-page">
       <div class="filters-section">
-        <form action="/api/listings/filter?=20" method="get">
+        <form class="filter-20-button">
           <button> Less than $20</button>
         </form>
-        <form action="/api/listings/filter?=50" method="get">
+        <form class="filter-50-button">
           <button> Less than $50</button>
         </form>
 

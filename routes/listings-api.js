@@ -68,4 +68,17 @@ router.get('/favourites/', (req,res) => {
   
 })
 
+router.get('/favourites/', (req,res) => {
+  listingQueries.getFavourites(req.session.user_id)
+  .then(listings => {
+    res.json({ listings });
+  })
+  .catch(err => {
+    res
+      .status(500)
+      .json({ error: err.message });
+  });
+  
+})
+
 module.exports = router;
