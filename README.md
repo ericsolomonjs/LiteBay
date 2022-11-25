@@ -1,9 +1,8 @@
-## Litebay
+# Litebay
 
 Litebay is a site designed as a buying/selling hub, where users can browse listings, keep track of items they have an eye on, and contact sellers regarding their listings. Litebay was a collaborative product built using EJS, jQuery, SASS, bcrypt, cookie session and Express.
 
 
-=========
 
 ## Dependencies
 
@@ -43,6 +42,8 @@ npm install
 npm run db:reset
 ```
 
+---
+
 ## Accessing the site
 
 1. Start up the server
@@ -57,19 +58,21 @@ npm run local
 http://localhost:8080/
 ```
 
+---
+
 ## Usage
 
 * The Home page
  
  The home page displays all current listings to the user and gives them the option to sort them by pricing. The user can use the buttons on the navigation bar to log in, register, or visit other pages on the site.
 
-![The landing page](images/home)
+![The landing page](images/home.png)
 
 * Favourites page
 
 Once signed in, any user can add a listing to their favourites to easily access the listings they are interested in
 
-![THe favourites page](images/userfavourites.png)
+![The favourites page](images/userfavourites.png)
 
 * Admin options
 
@@ -79,8 +82,18 @@ Users logged into an admin account have the option to create and delete listings
 ![Creating a new listing](images/newlisting.png)
 ![Items marked as sold will have their photos replaced](images/sold.png)
 
+---
+
 ## Database
 
 Attached here is an Entity Relationship diagram used when designing the database for this project
 
 ![ERD](images/erd.png)
+
+## Collaborators
+
+The Litebay project was put together by a team of 3 web development students from Lighthouse Labs
+
+[Eric Solomon](https://github.com/facelessagony)
+[Sid Natarajan](https://github.com/sidnat)
+[Ryan Zhen](https://github.com/Squoog)
