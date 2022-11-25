@@ -9,7 +9,7 @@ router.use(cookieSession({
 }));
 
 // logs user out, clears session cookies, redirect to home page
-router.post("/", (req, res) => {
+router.get("/", (req, res) => { // changed to get to match with Ryans logout button
   req.session = undefined;
 
   return res.redirect('/')
