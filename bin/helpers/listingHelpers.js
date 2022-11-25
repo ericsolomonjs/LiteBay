@@ -11,16 +11,16 @@ const pool = new Pool({
 // Function adds a listing to the database
 const addListing = (listing) => {
   const queryString = `
-    INSERT INTO listings (image, text, price, user_id, featured, date_added)
+    INSERT INTO listings (listing_title, image_id, text, price, user_id, date_added)
     VALUES ($1, $2, $3, $4, $5, $6)
     RETURNING *;
   `;
   const values = [
-    listing.image,
+    listing.title,
+    listing.image_id,
     listing.text,
     listing.price,
     listing.user_id,
-    listing.featured,
     listing.date_added
   ];
 
@@ -43,6 +43,24 @@ const deleteListing = (id) => {
 
   return pool
     .query(queryString, [id])
+    .then((result) => {
+      return result.rows[0];
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+};
+
+const addImage = (url, altText) => {
+  const queryString = `
+    INSERT INTO images (url, alt_text)
+    VALUES ($1, $2)
+    RETURNING *;
+  `;
+  const values = [url, altText];
+
+  return pool
+    .query(queryString, values)
     .then((result) => {
       return result.rows[0];
     })
@@ -196,8 +214,28 @@ const setListingSold = (id) => {
     });
 };
 
+const setFeatured = (id) => {
+  const queryString = `
+    UPDATE listings
+    SET featured = true
+    WHERE id = $1
+    RETURNING *;
+  `;
+
+  return pool
+    .query(queryString, [id])
+    .then((result) => {
+      return result.rows[0];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return null;
+    });
+};
+
 module.exports = {
   addListing,
+  addImage,
   deleteListing,
   getListingWithID,
   getListingsWithUsername,
@@ -206,4 +244,5 @@ module.exports = {
   getFeaturedListings,
   getFilteredListings,
   setListingSold,
+  setFeatured
 };
