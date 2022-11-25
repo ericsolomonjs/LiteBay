@@ -1,9 +1,21 @@
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: rgb(163, 208, 219);
-  ;
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap');
+
+.sort {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 400;
+  color: #222222;
+}
+
+title {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 50px;
+  color: #121212;
+}
+
+* {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: #121212;
 }

@@ -1,42 +1,52 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap');
 
-card {
+.listing-article {
   box-sizing: border-box;
   margin: 15px;
-  padding:5px;
-  background-color: #ABABAB;
+  padding:15px;
+  background-color: #ABBBDB;
+  border-radius: 15px;
 }
 
-listingName {
+.listing-img {
+  border-radius: 15px;
+}
+
+.listing-title {
   font-family: 'Quicksand', sans-serif;
-  font-weight: 400;
-  font-size: 18px;
+  font-weight: 700;
+  font-size: 24px;
   color: #22188F;
   text-decoration:none;
 }
 
-listingDetails {
+.posted-by, .cost {
   font-family: 'Quicksand', sans-serif;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 20px;
   color: #121212;
   text-decoration:none;
 }
 
-listingPosted {
+.posted-time {
   font-family: 'Quicksand', sans-serif;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 20px;
   color: #6C45B9;
   text-decoration: none;
 }
 
-listingText {
+.listing-text {
   font-family: 'Quicksand', sans-serif;
-  font-weight: 300;
-  font-size: 14px;
-  color: #121212;
+  font-weight: 400;
+  font-size: 20px;
+  color: #090909;
   text-decoration: none;
+}
+
+.stack {
+  display: flex;
+  justify-content: space-between;
 }
 
 messageButton {
