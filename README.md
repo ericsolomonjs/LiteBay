@@ -84,6 +84,10 @@ Once signed in, any user can add a listing to their favourites to easily access 
 ### Admin options
 
 Users logged into an admin account have the option to create and delete listings, and can mark them as sold.
+Newly registered users will not be able to access admin options. You can use a premade admin account to view these.
+
+Email: admin@gmail.com
+PW: password
 
 ![Admin options for listings](images/adminpage.png)
 ![Creating a new listing](images/newlisting.png)
