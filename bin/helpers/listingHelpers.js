@@ -59,24 +59,13 @@ const getListingWithID = (listingID) => {
     WHERE id = $1;
   `;
 
-  pool.query(queryString, [listingID])
-    .then(res => {
-      res.rows.forEach(listing => {
-        return {
-          listingID: listing.id,
-          imageID: listing.image_id,
-          listingText: listing.text,
-          listingPrice: listing.price,
-          userID: listing.user_id,
-          featured: listing.featured,
-          sold: listing.sold,
-          dateAdded: listing.date_added
-        };
-      });
-    })
-    .catch((error) => {
-      console.log(error.message);
-    });
+  return pool.query(queryString, [listingID])
+  .then((result) => {
+    return result.rows[0];
+  })
+  .catch((error) => {
+    console.log(error.message);
+  });
 };
 
 const getListingsWithUsername = (username) => {
@@ -90,7 +79,7 @@ const getListingsWithUsername = (username) => {
     WHERE users.username = '$1s';
   `;
 
-  pool.query(queryString, [username])
+  return pool.query(queryString, [username])
     .then(result => {
       result.rows.forEach((result) => {
         return result;
@@ -110,7 +99,7 @@ const getListingsWithUserID = (userID) => {
     WHERE id = $1;
   `;
 
-  pool.query(queryString, [userID])
+  return pool.query(queryString, [userID])
     .then(res => {
       res.rows.forEach(listing => {
         return {
@@ -170,7 +159,7 @@ const getFeaturedListings = () => {
     WHERE featured = true;
   `;
 
-  pool.query(queryString)
+  return pool.query(queryString)
     .then(res => {
       res.rows.forEach(listing => {
         return {
@@ -197,7 +186,7 @@ const getFilteredListings = (price) => {
     WHERE price <= $1;
   `;
 
-  pool.query(queryString, [price])
+  return pool.query(queryString, [price])
     .then(res => {
       res.rows.forEach(listing => {
         return {
