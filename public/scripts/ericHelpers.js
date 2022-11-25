@@ -3,32 +3,32 @@ const loadHomeListings = () => {
   $.get("/api/listings/featured/", (listings) => { })
     .done((listings) => {
       renderListings(listings, ".featured-listings-section");
-    })
+    });
 
   $.get("/api/listings/notfeatured/", (listings) => { })
     .done((listings) => {
       renderListings(listings, ".listings-section");
-    })
-}
+    });
+};
 
 const loadFavouriteListings = () => {
   $.get("/api/listings/favourites/", (listings) => { })
     .done((listings) => {
       renderListings(listings, ".user-favorites");
-    })
-}
+    });
+};
 
 const loadAdminListings = () => {
   $.get("/api/listings/featured/", (listings) => { })
     .done((listings) => {
       renderAdminListings(listings, ".admin-listings-section");
-    })
+    });
 
   $.get("/api/listings/notfeatured/", (listings) => { })
     .done((listings) => {
       renderAdminListings(listings, ".admin-listings-section");
-    })
-}
+    });
+};
 
 const renderListings = (listings, target) => {
   for (let listing of listings["listings"]) {
@@ -39,9 +39,9 @@ const renderListings = (listings, target) => {
     <article class="listing-article">
         <div>
           <!-- BUTTON POSTS TO FAVORITES DB OR IF EXISTS, DELETES FROM -->
-          <button type=submit buttonmethod="POST" buttonaction="/favourite/:post_id">
-            FAVOURITE
-          </button>
+          <form method="POST" action="/favourite/${listing.id}">
+            <button type="submit">Favourite</button>
+          </form>
           <img class="listing-img"
             src="${listing.url}"
             alt="${listing.alt_text}" width="70%">
@@ -143,7 +143,7 @@ const loadUserProfile = () => {
   $.get("/api/user/", (user) => { })
     .done((user) => {
       renderUserProfile(user, ".user-profile");
-    })
+    });
 };
 
 const renderUserProfile = (user, target) => {
