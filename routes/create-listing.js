@@ -12,15 +12,17 @@ router.use(cookieSession({
 }));
 
 router.get("/", (req, res) => {
-  const isAdmin = getIsAdmin(req.session.user_id);
-
-  if (!isAdmin) {
-    res.redirect("/login");
-    return res.send("<p> Please log in to create listing. </p>");
-  }
-
-  res.render("create_listing");
-})
+  getIsAdmin(req.session.user_id)
+    .then((adminStatus) => {
+      if (adminStatus) {
+        return res.render("create_listing");
+      }
+      return res.send("<p>You are not authorized to create a listing.</p>");
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+});
 
 router.post("/", (req, res) => {
   const listing = req.body.listing;
