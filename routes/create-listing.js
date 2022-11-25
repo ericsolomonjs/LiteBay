@@ -1,9 +1,9 @@
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 const cookieSession = require("cookie-session");
 
-const {getIsAdmin} = require("../bin/helpers/userHelpers");
-const {addListing} = require("../bin/helpers/listingHelpers");
+const { getIsAdmin } = require("../bin/helpers/userHelpers");
+const { addListing, addImage } = require("../bin/helpers/listingHelpers");
 
 router.use(cookieSession({
   name: "session",
@@ -25,24 +25,51 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const listing = req.body.listing;
-  const image = req.body.image_url;
-  const description = req.body.description;
-  const price = req.body.price;
-  const user = req.session.user_id
+  const user_id = req.session.user_id;
 
-  if (!user) {
-    res.redirect("/login");
-  }  else {
-    var today = new Date();
-    var day = String(today.getDate()).padStart(2, '0');
-    var month = String(today.getMonth() + 1).padStart(2, '0');
-    var year = today.getFullYear();
-    today = year + "-" + month + "-" + day;
+  getIsAdmin(user_id)
+    .then((adminStatus) => {
+      if (adminStatus) {
+        const image_url = req.body.image_url;
+        const alt_text = 'alt text';
+        const title = req.body.listing;
+        const text = req.body.description;
+        const price = Number(req.body.price);
 
-    addListing(listing, image, description, price, user, false, false, today);
-    res.redirect("/");
-  }
-})
+        var date_added = new Date();
+        var day = String(date_added.getDate()).padStart(2, '0');
+        var month = String(date_added.getMonth() + 1).padStart(2, '0');
+        var year = date_added.getFullYear();
+        date_added = `${year}-${month}-${day}`;
+
+        addImage(image_url, alt_text)
+          .then((result) => {
+
+            console.log('result: ', result);
+
+            addListing({
+              title,
+              image_id: result.id,
+              text,
+              price,
+              user_id,
+              date_added
+            }).then(() => {
+              return res.redirect("/admin");
+            })
+              .catch((error) => {
+                console.log(error.message);
+              });
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      }
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return res.send("<p>You are not authorized to create a listing.</p>");
+    });
+});
 
 module.exports = router;
