@@ -20,7 +20,7 @@ router.post("/:id", (req, res) => {
 
   setFavourite(req.session.user_id, req.params.id)
     .then(() => {
-      return res.reload('back');
+      return res.redirect(req.get('referer'));
     })
     .catch((error) => {
       console.log(error.message);
