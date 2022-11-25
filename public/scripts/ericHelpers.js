@@ -38,9 +38,9 @@ const renderListings = (listings, target) => {
     <article class=listing-article>
           <div>
             <!-- BUTTON POSTS TO FAVORITES DB OR IF EXISTS, DELETES FROM -->
-            <button type=submit buttonmethod="POST" buttonaction="/favourite/${listing.id}">
-              FAVOURITE
-            </button>
+            <form method="POST" action="/favourite/${listing.id}">
+              <button type="submit">Favourite</button>
+            </form>
             <img class="listing-img"
               src="${listing.url}"
               alt="${listing.alt_text}" width="70%">
