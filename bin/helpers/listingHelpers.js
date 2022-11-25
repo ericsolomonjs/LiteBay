@@ -1,12 +1,4 @@
-// const db = require('../../db/connection');
-const { Pool } = require("pg");
-
-const pool = new Pool({
-  user: 'labber',
-  password: 'labber',
-  host: 'localhost',
-  database: 'midterm'
-});
+const db = require('../../db/connection');
 
 // Function adds a listing to the database
 const addListing = (listing) => {
@@ -24,7 +16,7 @@ const addListing = (listing) => {
     listing.date_added
   ];
 
-  return pool
+  return db
     .query(queryString, values)
     .then((result) => {
       return result.rows[0];
@@ -41,7 +33,7 @@ const deleteListing = (id) => {
     WHERE listings.id = $1
   `;
 
-  return pool
+  return db
     .query(queryString, [id])
     .then((result) => {
       return result.rows[0];
@@ -59,7 +51,7 @@ const addImage = (url, altText) => {
   `;
   const values = [url, altText];
 
-  return pool
+  return db
     .query(queryString, values)
     .then((result) => {
       return result.rows[0];
@@ -77,7 +69,7 @@ const getListingWithID = (listingID) => {
     WHERE id = $1;
   `;
 
-  return pool.query(queryString, [listingID])
+  return db.query(queryString, [listingID])
     .then((result) => {
       return result.rows[0];
     })
@@ -97,7 +89,7 @@ const getListingsWithUsername = (username) => {
     WHERE users.username = '$1s';
   `;
 
-  return pool.query(queryString, [username])
+  return db.query(queryString, [username])
     .then((result) => {
       return result.rows[0];
     })
@@ -115,7 +107,7 @@ const getListingsWithUserID = (userID) => {
     WHERE id = $1;
   `;
 
-  return pool.query(queryString, [userID])
+  return db.query(queryString, [userID])
     .then((result) => {
       return result.rows[0];
     })
@@ -168,7 +160,7 @@ const getFeaturedListings = () => {
     WHERE featured = true;
   `;
 
-  return pool.query(queryString)
+  return db.query(queryString)
     .then((result) => {
       return result.rows[0];
     })
@@ -185,7 +177,7 @@ const getFilteredListings = (price) => {
     WHERE price <= $1;
   `;
 
-  return pool.query(queryString, [price])
+  return db.query(queryString, [price])
     .then((result) => {
       return result.rows[0];
     })
@@ -203,7 +195,26 @@ const setListingSold = (id) => {
     RETURNING *;
   `;
 
-  return pool
+  return db
+    .query(queryString, [id])
+    .then((result) => {
+      return result.rows[0];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return null;
+    });
+};
+
+setImageSold = (id) => {
+  const queryString = `
+    UPDATE images
+    SET url = 'https://thumbs.dreamstime.com/b/sold-sign-sticker-stamp-vector-texture-154049307.jpg'
+    WHERE id = $1
+    RETURNING *;
+  `;
+
+  return db
     .query(queryString, [id])
     .then((result) => {
       return result.rows[0];
@@ -222,7 +233,7 @@ const setFeatured = (id) => {
     RETURNING *;
   `;
 
-  return pool
+  return db
     .query(queryString, [id])
     .then((result) => {
       return result.rows[0];

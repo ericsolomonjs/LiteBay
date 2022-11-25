@@ -44,8 +44,17 @@ router.post("/:id/marksold", (req, res) => {
       }
 
       setListingSold(req.params.id)
-        .then(() => {
-          return res.redirect(req.get('referer'));
+        .then((result) => {
+
+          console.log('res', result)
+
+          setImageSold(result.image_id)
+            .then(() => {
+              return res.redirect(req.get('referer'));
+            })
+            .catch((error) => {
+              console.log(error.message);
+            });
         })
         .catch((error) => {
           console.log(error.message);
