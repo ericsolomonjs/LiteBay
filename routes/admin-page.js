@@ -57,7 +57,7 @@ router.post("/:id/delete", (req, res) => {
             deleteListing(listing.id);
             return res.redirect('/admin');
           } else {
-            return res.send("<p>You are not the owner of this Short URL ID.</p>");
+            return res.send("<p>You are not the owner of this listing.</p>");
           }
         })
         .catch((error) => {

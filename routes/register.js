@@ -13,7 +13,6 @@ const {
   addUser,
   getUserObjectWithUsername,
   getUserObjectWithEmail,
-  getUserIDWithUsername
 } = require("../bin/helpers/userHelpers");
 
 // user submits data for registration, account is created
