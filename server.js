@@ -28,13 +28,14 @@ app.use(express.static('public'));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const registerRoutes = require('./routes/register')
-const loginRoutes = require('./routes/login')
-const logoutRoutes = require('./routes/logout')
+const registerRoutes = require('./routes/register');
+const loginRoutes = require('./routes/login');
+const logoutRoutes = require('./routes/logout');
 const userRoutes = require('./routes/user');
-const adminRoutes = require('./routes/admin-page')
+const adminRoutes = require('./routes/admin-page');
 const createListing = require('./routes/create-listing');
-const listingsApi = require('./routes/listings-api')
+const listingsApi = require('./routes/listings-api');
+const userApi = require("./routes/user-api");
 
 
 // Mount all resource routes
@@ -47,6 +48,7 @@ app.use('/user', userRoutes);
 app.use('/admin', adminRoutes);
 app.use('/create-listing', createListing);
 app.use('/api/listings', listingsApi);
+app.use('/api/user', userApi);
 
 // Home page
 // Warning: avoid creating more routes in this file!
