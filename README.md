@@ -62,19 +62,22 @@ http://localhost:8080/
 
 ## Usage
 
-* The Home page
+### The Home page
+
  
  The home page displays all current listings to the user and gives them the option to sort them by pricing. The user can use the buttons on the navigation bar to log in, register, or visit other pages on the site.
 
 ![The landing page](images/home.png)
 
-* Favourites page
+
+### Favourites page
+
 
 Once signed in, any user can add a listing to their favourites to easily access the listings they are interested in
 
 ![The favourites page](images/userfavourites.png)
 
-* Admin options
+### Admin options
 
 Users logged into an admin account have the option to create and delete listings, and can mark them as sold.
 
