@@ -17,8 +17,6 @@ router.use(cookieSession({
 }));
 
 router.get('/', (req, res) => {
-
-  
   userQueries.getThisUserById(req.session.user_id)
     .then(user => {
       res.json({ user });
