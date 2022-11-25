@@ -94,6 +94,6 @@ Attached here is an Entity Relationship diagram used when designing the database
 
 The Litebay project was put together by a team of 3 web development students from Lighthouse Labs
 
-[Eric Solomon](https://github.com/facelessagony)
-[Sid Natarajan](https://github.com/sidnat)
-[Ryan Zhen](https://github.com/Squoog)
+- [Eric Solomon](https://github.com/facelessagony)
+- [Sid Natarajan](https://github.com/sidnat)
+- [Ryan Zhen](https://github.com/Squoog)
