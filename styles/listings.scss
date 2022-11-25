@@ -2,14 +2,17 @@
 
 .listing-article {
   box-sizing: border-box;
-  margin: 15px;
-  padding:15px;
+  width: 1000px;
+  margin:  15px;
+  padding: 25px;
   background-color: #ABBBDB;
   border-radius: 15px;
 }
 
 .listing-img {
   border-radius: 15px;
+  width:  200px;
+  height: 200px;
 }
 
 .listing-title {
