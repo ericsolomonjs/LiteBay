@@ -36,7 +36,7 @@ const adminRoutes = require('./routes/admin-page');
 const createListing = require('./routes/create-listing');
 const listingsApi = require('./routes/listings-api');
 const userApi = require("./routes/user-api");
-
+const favourite = require("./routes/favourite");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -49,6 +49,7 @@ app.use('/admin', adminRoutes);
 app.use('/create-listing', createListing);
 app.use('/api/listings', listingsApi);
 app.use('/api/user', userApi);
+app.use('/favourite', favourite);
 
 // Home page
 // Warning: avoid creating more routes in this file!
