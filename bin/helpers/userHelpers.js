@@ -60,7 +60,6 @@ const setAdmin = (username) => {
     });
 };
 
-// no longer required after project requirements were explained
 const getUserIDWithEmail = (email) => {
   const queryString = `
     SELECT id
@@ -78,7 +77,6 @@ const getUserIDWithEmail = (email) => {
     });
 };
 
-// no longer required after project requirements were explained
 const getUserIDWithUsername = (username) => {
   const queryString = `
     SELECT id
